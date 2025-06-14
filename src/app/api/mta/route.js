@@ -20,14 +20,44 @@ export async function GET(request) {
             entityCount: feed.entity.length,
             timestamp: new Date(feed.header.timestamp * 1000).toISOString()
         });
+
+        // Let's explore the structure of trip updates
+        const tripUpdates = feed.entity.filter(entity => entity.tripUpdate);
+        const vehiclePositions = feed.entity.filter(entity => entity.vehicle);
+        const alerts = feed.entity.filter(entity => entity.alert);
+
+        // Get detailed info about first few trip updates
+        const detailedTripUpdates = tripUpdates.slice(0, 3).map(entity => {
+            const trip = entity.tripUpdate.trip;
+            const stopTimeUpdates = entity.tripUpdate.stopTimeUpdate || [];
+            
+            return {
+                tripId: trip.tripId,
+                routeId: trip.routeId,
+                direction: trip.nyctTripDescriptor?.direction,
+                isAssigned: trip.nyctTripDescriptor?.isAssigned,
+                trainId: trip.nyctTripDescriptor?.trainId,
+                stopUpdates: stopTimeUpdates.slice(0, 5).map(stop => ({
+                    stopId: stop.stopId,
+                    arrivalTime: stop.arrival ? new Date(stop.arrival.time * 1000).toISOString() : null,
+                    departureTime: stop.departure ? new Date(stop.departure.time * 1000).toISOString() : null
+                }))
+            };
+        });
         
-        // Return basic info about the feed for now
+        // Return comprehensive info about the feed
         return NextResponse.json({
             header: feed.header,
-            entityCount: feed.entity.length,
             timestamp: new Date(feed.header.timestamp * 1000).toISOString(),
-            // Include first few entities for exploration
-            sampleEntities: feed.entity.slice(0, 3)
+            summary: {
+                totalEntities: feed.entity.length,
+                tripUpdates: tripUpdates.length,
+                vehiclePositions: vehiclePositions.length,
+                alerts: alerts.length
+            },
+            detailedTripUpdates,
+            // Include some raw entities for debugging
+            rawSampleEntities: feed.entity.slice(0, 2)
         });
         
     } catch (error) {
