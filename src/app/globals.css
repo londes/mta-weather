@@ -3,12 +3,13 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
+/* Remove dark mode for mobile to ensure readability */
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 html,
 body {
@@ -35,8 +36,15 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* Force light mode for better mobile readability */
+html {
+  color-scheme: light;
+}
+
+/* Ensure MTA component has good contrast on mobile */
+@media (max-width: 768px) {
+  body {
+    background: #ffffff;
+    color: #171717;
   }
 }
