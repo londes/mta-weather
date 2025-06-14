@@ -26,24 +26,77 @@ export async function GET(request) {
         const vehiclePositions = feed.entity.filter(entity => entity.vehicle);
         const alerts = feed.entity.filter(entity => entity.alert);
 
-        // Get detailed info about first few trip updates
-        const detailedTripUpdates = tripUpdates.slice(0, 3).map(entity => {
+        // Separate trips with and without stop updates
+        const tripsWithStops = [];
+        const tripsWithoutStops = [];
+
+        tripUpdates.forEach(entity => {
             const trip = entity.tripUpdate.trip;
             const stopTimeUpdates = entity.tripUpdate.stopTimeUpdate || [];
             
-            return {
+            const tripData = {
                 tripId: trip.tripId,
                 routeId: trip.routeId,
                 direction: trip.nyctTripDescriptor?.direction,
                 isAssigned: trip.nyctTripDescriptor?.isAssigned,
                 trainId: trip.nyctTripDescriptor?.trainId,
-                stopUpdates: stopTimeUpdates.slice(0, 5).map(stop => ({
+                stopUpdates: stopTimeUpdates.map(stop => ({
                     stopId: stop.stopId,
                     arrivalTime: stop.arrival ? new Date(stop.arrival.time * 1000).toISOString() : null,
                     departureTime: stop.departure ? new Date(stop.departure.time * 1000).toISOString() : null
                 }))
             };
+
+            if (stopTimeUpdates.length > 0) {
+                tripsWithStops.push(tripData);
+            } else {
+                tripsWithoutStops.push(tripData);
+            }
         });
+
+        console.log('Trip Analysis:', {
+            totalTrips: tripUpdates.length,
+            tripsWithStops: tripsWithStops.length,
+            tripsWithoutStops: tripsWithoutStops.length
+        });
+
+        // Log some examples
+        console.log('Sample trip WITHOUT stops:', tripsWithoutStops.slice(0, 2));
+        console.log('Sample trip WITH stops:', tripsWithStops.slice(0, 2));
+
+        // Analyze stop patterns to find northernmost stops
+        const allStops = new Set();
+        const northboundStops = new Set();
+        const southboundStops = new Set();
+
+        tripsWithStops.forEach(trip => {
+            trip.stopUpdates.forEach(stop => {
+                allStops.add(stop.stopId);
+                if (stop.stopId?.endsWith('N')) {
+                    northboundStops.add(stop.stopId);
+                } else if (stop.stopId?.endsWith('S')) {
+                    southboundStops.add(stop.stopId);
+                }
+            });
+        });
+
+        // Sort stops to find the pattern (assuming G## format where higher numbers = further north)
+        const sortedNorthbound = Array.from(northboundStops).sort();
+        const sortedSouthbound = Array.from(southboundStops).sort();
+
+        console.log('Stop Analysis:', {
+            totalUniqueStops: allStops.size,
+            northboundStops: sortedNorthbound,
+            southboundStops: sortedSouthbound,
+            // Show first and last few to identify the pattern
+            firstFewNorthbound: sortedNorthbound.slice(0, 6),
+            lastFewNorthbound: sortedNorthbound.slice(-6),
+            firstFewSouthbound: sortedSouthbound.slice(0, 6),
+            lastFewSouthbound: sortedSouthbound.slice(-6)
+        });
+
+        // Return the first several trips that actually have stop data
+        const detailedTripUpdates = tripsWithStops.slice(0, 8); // Get more trips with actual data
         
         // Return comprehensive info about the feed
         return NextResponse.json({
@@ -53,9 +106,28 @@ export async function GET(request) {
                 totalEntities: feed.entity.length,
                 tripUpdates: tripUpdates.length,
                 vehiclePositions: vehiclePositions.length,
-                alerts: alerts.length
+                alerts: alerts.length,
+                tripsWithStops: tripsWithStops.length,
+                tripsWithoutStops: tripsWithoutStops.length
+            },
+            stopAnalysis: {
+                totalUniqueStops: allStops.size,
+                northboundStops: sortedNorthbound,
+                southboundStops: sortedSouthbound,
+                northmostStops: sortedNorthbound.slice(-4), // Last 4 = northernmost
+                southmostStops: sortedSouthbound.slice(0, 4) // First 4 = southernmost
             },
             detailedTripUpdates,
+            // All trips with stops for better arrival analysis
+            allTripsWithStops: tripsWithStops,
+            // Debug info about trips without stops
+            tripsWithoutStopsDebug: tripsWithoutStops.slice(0, 3).map(trip => ({
+                tripId: trip.tripId,
+                routeId: trip.routeId,
+                isAssigned: trip.isAssigned,
+                trainId: trip.trainId,
+                direction: trip.direction
+            })),
             // Include some raw entities for debugging
             rawSampleEntities: feed.entity.slice(0, 2)
         });
