@@ -1,0 +1,15 @@
+.container {
+    padding: 20px;
+    background: #f5f5f5;
+  }
+  
+  .precipitationChart {
+    height: 200px;
+    margin: 10px 0;
+  }
+  
+  .hourlyItem {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
