@@ -66,16 +66,16 @@ export default function MTAArrivals() {
       .slice(0, 2);
   };
 
-  // Using G34 as Greenpoint Avenue
-  const greenpointNorth = "G34N";
-  const greenpointSouth = "G34S";
+  // Using G28 as Greenpoint Avenue (updated from G34)
+  const greenpointNorth = "G28N";
+  const greenpointSouth = "G28S";
 
   const northboundArrivals = getSoonestArrivals(mtaData?.allTripsWithStops, greenpointNorth);
   const southboundArrivals = getSoonestArrivals(mtaData?.allTripsWithStops, greenpointSouth);
 
   return (
     <div>
-      <h1>G Train - Greenpoint Avenue (G34)</h1>
+      <h1>G Train - Greenpoint Avenue (G28)</h1>
       <p>
         Last Updated: {lastUpdated ? lastUpdated.toLocaleTimeString() : 'Loading...'} 
         {lastUpdated && <span> (auto-refreshes every minute)</span>}

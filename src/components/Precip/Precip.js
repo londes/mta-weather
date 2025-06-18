@@ -16,7 +16,7 @@ export default function Precip() {
 
     return <div className={styles.container}>
         <div className={styles.precipitationChart}>
-            {/* Chart content */}
+            Chance of precipitation by hour
         </div>
         <div className={styles.hourlyItem}>
             {weatherData?.precipitation.precipitation_probability.map((probability, idx) => <div key={idx}>{idx}:{probability}</div>)}
