@@ -9,7 +9,7 @@ export async function GET(request) {
       `latitude=${lat}&longitude=${lon}&` +
       `hourly=precipitation_probability,precipitation,temperature_2m&` +
       `daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max&` +
-      `forecast_days=4&` +
+      `forecast_days=5&` +
       `temperature_unit=fahrenheit&` +
       `timezone=auto`;
     

@@ -76,21 +76,21 @@ export default function MTAArrivals() {
 
   return (
     <div>
-      <h1>G Train - Greenpoint Avenue (G26)</h1>
+      <h1>G Train - Greenpoint Avenue</h1>
       <p>
         Last Updated: {lastUpdated ? lastUpdated.toLocaleTimeString() : 'Loading...'} 
-        {/* {lastUpdated && <span> (auto-refreshes every 29 seconds)</span>} */}
       </p>
       
       {mtaData ? (
         <div>
           <div className={styles.trainsContainer}>
             <div className={styles.arrivalContainer}>
-              <h2>NORTHBOUND (to Queens)</h2>
               {northboundArrivals.length > 0 ? (
                 northboundArrivals.map((arrival, i) => (
                 <div key={i} className={styles.trainArrival}>
-                  {arrival.minutesAway <= 0 ? 'Arriving now' : `${arrival.minutesAway} minutes`} - {new Date(arrival.arrivalTime).toLocaleTimeString()}
+                  <img src="/NYCS-bull-trans-G-Std.svg" alt="G Train" />
+                  <div><h2>Court Square (Queens)</h2></div>
+                  <div><h3>{arrival.minutesAway <= 0 ? 'Arriving now' : `${arrival.minutesAway} minutes`}</h3>{new Date(arrival.arrivalTime).toLocaleTimeString()}</div>
                 </div>
               ))
               ) : (
@@ -98,11 +98,12 @@ export default function MTAArrivals() {
               )}
             </div>
             <div className={styles.arrivalContainer}>
-            <h2>SOUTHBOUND (to Brooklyn)</h2>
             {southboundArrivals.length ? ( 
               southboundArrivals.map((arrival, i) => (
               <div key={i} className={styles.trainArrival}>
-                {arrival.minutesAway <= 0 ? 'Arriving now' : `${arrival.minutesAway} minutes`} - {new Date(arrival.arrivalTime).toLocaleTimeString()}
+                <img src="/NYCS-bull-trans-G-Std.svg" alt="G Train" />
+                <div><h2>Church Ave (Brooklyn)</h2></div>
+                <div><h3>{arrival.minutesAway <= 0 ? 'Arriving now' : `${arrival.minutesAway} minutes`}</h3>{new Date(arrival.arrivalTime).toLocaleTimeString()}</div>
               </div>
             ))
             ) : (

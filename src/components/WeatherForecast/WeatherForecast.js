@@ -33,9 +33,17 @@ export default function WeatherForecast() {
     };
 
     // Helper function to format day name
-    const getDayName = (dateString, index) => {
-        if (index === 0) return 'Today';
-        const date = new Date(dateString);
+    const getDayName = (dateString) => {
+        const date = new Date(dateString + 'T12:00:00'); // Add noon time to avoid timezone issues
+        const today = new Date();
+        
+        // Check if this date is today
+        const isToday = date.toDateString() === today.toDateString();
+        
+        if (isToday) {
+            return 'Today';
+        }
+        
         return date.toLocaleDateString('en-US', { weekday: 'short' });
     };
 
@@ -43,8 +51,14 @@ export default function WeatherForecast() {
         return <div className={styles.loading}>Loading weather...</div>;
     }
 
+    // Find today's forecast (first entry should be today)
     const today = weatherData.daily_forecast[0];
-    const upcomingDays = weatherData.daily_forecast.slice(1);
+    
+    // Get next 4 days, filtering out today if it appears
+    const upcomingDays = weatherData.daily_forecast.filter((day, index) => {
+        if (index === 0) return false; // Skip first day (today)
+        return true;
+    }).slice(0, 4); // Take only 4 days after today
 
     // Get current temperature from hourly data (first entry is current/nearest hour)
     const currentTemp = weatherData.precipitation.temperature[0];
@@ -75,14 +89,13 @@ export default function WeatherForecast() {
                 </div>
             </div>
 
-            {/* 4-Day Forecast */}
+            {/* 4-Day Forecast (Tomorrow through Day 5) */}
             <div className={styles.forecastSection}>
-                {/* <h3 className={styles.forecastTitle}>4-Day Forecast</h3> */}
                 <div className={styles.forecastGrid}>
-                    {weatherData.daily_forecast.map((day, index) => (
+                    {upcomingDays.map((day, index) => (
                         <div key={index} className={styles.forecastDay}>
                             <div className={styles.dayName}>
-                                {getDayName(day.date, index)}
+                                {getDayName(day.date)}
                             </div>
                             <div className={styles.dayIcon}>
                                 {getWeatherIcon(day.weather_type)}

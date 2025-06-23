@@ -18,6 +18,35 @@
     border-radius: 12px;
     padding: 20px;
     margin: 20px 0;
+    border: 1px solid red;
 }
 
-.trainArrival {}
+.trainArrival {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border: 1px solid blue;
+}
+
+.trainArrival > * {
+    border: 1px solid green;
+}
+
+/* SVG styling - reduce size by 30% */
+.trainArrival img {
+    width: 4em;  /* 40px reduced by 30% = 28px */
+    height: 4em;
+    flex-shrink: 0;
+}
+
+/* Text sizing - increase by 30% */
+.trainArrival h2 {
+    font-size: 1.95rem;  /* Default ~1.5rem increased by 30% */
+    margin: 0;
+}
+
+.trainArrival h3 {
+    font-size: 1.56rem;  /* Default ~1.2rem increased by 30% */
+    margin: 0;
+}
