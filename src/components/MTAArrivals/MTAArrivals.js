@@ -24,8 +24,8 @@ export default function MTAArrivals() {
     // Fetch data immediately on component mount
     fetchMTAData();
 
-    // Set up interval to fetch data every 60 seconds
-    const interval = setInterval(fetchMTAData, 60000);
+    // Set up interval to fetch data every 29 seconds
+    const interval = setInterval(fetchMTAData, 29000);
 
     // Cleanup interval on component unmount
     return () => clearInterval(interval);
@@ -66,19 +66,19 @@ export default function MTAArrivals() {
       .slice(0, 2);
   };
 
-  // Using G28 as Greenpoint Avenue (updated from G34)
-  const greenpointNorth = "G28N";
-  const greenpointSouth = "G28S";
+  // Using G28 as Greenpoint Avenue 
+  const greenpointNorth = "G26N";
+  const greenpointSouth = "G26S";
 
   const northboundArrivals = getSoonestArrivals(mtaData?.allTripsWithStops, greenpointNorth);
   const southboundArrivals = getSoonestArrivals(mtaData?.allTripsWithStops, greenpointSouth);
 
   return (
     <div>
-      <h1>G Train - Greenpoint Avenue (G28)</h1>
+      <h1>G Train - Greenpoint Avenue (G26)</h1>
       <p>
         Last Updated: {lastUpdated ? lastUpdated.toLocaleTimeString() : 'Loading...'} 
-        {lastUpdated && <span> (auto-refreshes every minute)</span>}
+        {lastUpdated && <span> (auto-refreshes every 29 seconds)</span>}
       </p>
       
       {mtaData ? (

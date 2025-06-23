@@ -1,0 +1,164 @@
+.container {
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+  font-size: 16px;
+}
+
+/* Today's Weather Section */
+.todaySection {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.todayMain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.currentTemp {
+  font-size: 48px;
+  font-weight: 300;
+  color: #1f2937;
+  line-height: 1;
+}
+
+.weatherIcon {
+  font-size: 48px;
+}
+
+.todayDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.highLow {
+  font-size: 18px;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.weatherType {
+  font-size: 16px;
+  color: #6b7280;
+  text-transform: capitalize;
+}
+
+.rainChance {
+  font-size: 14px;
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+/* 4-Day Forecast Section */
+.forecastSection {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.forecastTitle {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.forecastGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.forecastDay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 8px;
+  border-radius: 8px;
+  background: #f9fafb;
+  transition: background-color 0.2s;
+}
+
+.forecastDay:hover {
+  background: #f3f4f6;
+}
+
+.dayName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.dayIcon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.dayTemp {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 4px;
+}
+
+.dayRain {
+  font-size: 12px;
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    margin: 10px;
+    padding: 16px;
+  }
+  
+  .todaySection {
+    padding: 20px;
+  }
+  
+  .todayMain {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+  
+  .currentTemp {
+    font-size: 40px;
+  }
+  
+  .weatherIcon {
+    font-size: 40px;
+  }
+  
+  .forecastGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  .forecastDay {
+    padding: 12px 8px;
+  }
+  
+  .dayIcon {
+    font-size: 28px;
+  }
+} 
