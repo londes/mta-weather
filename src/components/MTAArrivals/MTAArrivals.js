@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import styles from "./MTAArrivals.module.css";
 
 export default function MTAArrivals() {
   const [mtaData, setMtaData] = useState(null);
@@ -78,32 +79,37 @@ export default function MTAArrivals() {
       <h1>G Train - Greenpoint Avenue (G26)</h1>
       <p>
         Last Updated: {lastUpdated ? lastUpdated.toLocaleTimeString() : 'Loading...'} 
-        {lastUpdated && <span> (auto-refreshes every 29 seconds)</span>}
+        {/* {lastUpdated && <span> (auto-refreshes every 29 seconds)</span>} */}
       </p>
       
       {mtaData ? (
         <div>
-          <h2>NORTHBOUND (to Queens)</h2>
-          {northboundArrivals.length > 0 ? (
-            northboundArrivals.map((arrival, i) => (
-              <div key={i}>
+          <div className={styles.trainsContainer}>
+            <div className={styles.arrivalContainer}>
+              <h2>NORTHBOUND (to Queens)</h2>
+              {northboundArrivals.length > 0 ? (
+                northboundArrivals.map((arrival, i) => (
+                <div key={i} className={styles.trainArrival}>
+                  {arrival.minutesAway <= 0 ? 'Arriving now' : `${arrival.minutesAway} minutes`} - {new Date(arrival.arrivalTime).toLocaleTimeString()}
+                </div>
+              ))
+              ) : (
+                <div>No upcoming northbound trains</div>
+              )}
+            </div>
+            <div className={styles.arrivalContainer}>
+            <h2>SOUTHBOUND (to Brooklyn)</h2>
+            {southboundArrivals.length ? ( 
+              southboundArrivals.map((arrival, i) => (
+              <div key={i} className={styles.trainArrival}>
                 {arrival.minutesAway <= 0 ? 'Arriving now' : `${arrival.minutesAway} minutes`} - {new Date(arrival.arrivalTime).toLocaleTimeString()}
               </div>
             ))
-          ) : (
-            <div>No upcoming northbound trains</div>
-          )}
-
-          <h2>SOUTHBOUND (to Brooklyn)</h2>
-          {southboundArrivals.length > 0 ? (
-            southboundArrivals.map((arrival, i) => (
-              <div key={i}>
-                {arrival.minutesAway <= 0 ? 'Arriving now' : `${arrival.minutesAway} minutes`} - {new Date(arrival.arrivalTime).toLocaleTimeString()}
-              </div>
-            ))
-          ) : (
-            <div>No upcoming southbound trains</div>
-          )}
+            ) : (
+              <div>No upcoming southbound trains</div>
+            )}
+            </div>
+          </div>
         </div>
       ) : (
         <div>Loading...</div>
