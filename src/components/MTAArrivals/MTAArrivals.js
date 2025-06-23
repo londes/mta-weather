@@ -88,9 +88,14 @@ export default function MTAArrivals() {
               {northboundArrivals.length > 0 ? (
                 northboundArrivals.map((arrival, i) => (
                 <div key={i} className={styles.trainArrival}>
-                  <img src="/NYCS-bull-trans-G-Std.svg" alt="G Train" />
-                  <div><h2>Court Square (Queens)</h2></div>
-                  <div><h3>{arrival.minutesAway <= 0 ? 'Arriving now' : `${arrival.minutesAway} minutes`}</h3>{new Date(arrival.arrivalTime).toLocaleTimeString()}</div>
+                  <div>
+                    <img src="/NYCS-bull-trans-G-Std.svg" alt="G Train" />
+                    <div><h2>Court Square (Queens)</h2></div>
+                  </div>
+                  <div>
+                    <div><h3>{arrival.minutesAway <= 0 ? 'Arriving now' : `${arrival.minutesAway} minutes`}</h3></div>
+                    <div>{new Date(arrival.arrivalTime).toLocaleTimeString()}</div>
+                  </div>
                 </div>
               ))
               ) : (
@@ -101,9 +106,14 @@ export default function MTAArrivals() {
             {southboundArrivals.length ? ( 
               southboundArrivals.map((arrival, i) => (
               <div key={i} className={styles.trainArrival}>
-                <img src="/NYCS-bull-trans-G-Std.svg" alt="G Train" />
-                <div><h2>Church Ave (Brooklyn)</h2></div>
-                <div><h3>{arrival.minutesAway <= 0 ? 'Arriving now' : `${arrival.minutesAway} minutes`}</h3>{new Date(arrival.arrivalTime).toLocaleTimeString()}</div>
+                <div>
+                  <img src="/NYCS-bull-trans-G-Std.svg" alt="G Train" />
+                  <div><h2>Church Ave (Brooklyn)</h2></div>
+                </div>
+                <div>
+                  <div><h3>{arrival.minutesAway <= 0 ? 'Arriving now' : `${arrival.minutesAway} minutes`}</h3></div>
+                  <div>{new Date(arrival.arrivalTime).toLocaleTimeString()}</div>
+                </div>
               </div>
             ))
             ) : (

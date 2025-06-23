@@ -18,7 +18,7 @@
     border-radius: 12px;
     padding: 20px;
     margin: 20px 0;
-    border: 1px solid red;
+    gap: 16px; /* Add space between train arrival items */
 }
 
 .trainArrival {
@@ -26,11 +26,35 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    border: 1px solid blue;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.trainArrival > * {
-    border: 1px solid green;
+.trainArrival:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 25px -5px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-color: #cbd5e1;
+}
+
+.trainArrival::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #10b981, #059669);
+    border-radius: 16px 16px 0 0;
 }
 
 /* SVG styling - reduce size by 30% */
@@ -38,15 +62,41 @@
     width: 4em;  /* 40px reduced by 30% = 28px */
     height: 4em;
     flex-shrink: 0;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
-/* Text sizing - increase by 30% */
+/* Text styling - increase by 30% */
 .trainArrival h2 {
     font-size: 1.95rem;  /* Default ~1.5rem increased by 30% */
     margin: 0;
+    color: #1f2937;
+    font-weight: 600;
 }
 
 .trainArrival h3 {
     font-size: 1.56rem;  /* Default ~1.2rem increased by 30% */
     margin: 0;
+    color: #4b5563;
+    font-weight: 500;
+    text-align: right;
+}
+
+/* Add some spacing and alignment improvements */
+.trainArrival > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.trainArrival > div:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.trainArrival > div:last-child > div:last-child {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 400;
 }
