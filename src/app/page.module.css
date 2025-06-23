@@ -40,12 +40,28 @@
   padding: 20px;
 }
 
-.precip {
+.weatherContainer {
+  display: flex;
+  gap: 20px;
   background-color: #f0f0f0;
+  padding: 20px;
+  min-height: 400px;
 }
 
 .weather {
-  background-color: #f0f0f0;
+  flex: 0 0 30%;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.precip {
+  flex: 0 0 70%;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .tempSun {

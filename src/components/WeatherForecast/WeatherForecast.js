@@ -50,7 +50,7 @@ export default function WeatherForecast() {
     const currentTemp = weatherData.precipitation.temperature[0];
 
     return (
-        <div className={styles.container}>
+        <div className={styles.forecastContainer}>
             {/* Today's Weather */}
             <div className={styles.todaySection}>
                 <div className={styles.todayMain}>
@@ -77,7 +77,7 @@ export default function WeatherForecast() {
 
             {/* 4-Day Forecast */}
             <div className={styles.forecastSection}>
-                <h3 className={styles.forecastTitle}>4-Day Forecast</h3>
+                {/* <h3 className={styles.forecastTitle}>4-Day Forecast</h3> */}
                 <div className={styles.forecastGrid}>
                     {weatherData.daily_forecast.map((day, index) => (
                         <div key={index} className={styles.forecastDay}>

@@ -1,7 +1,16 @@
-.container {
-  padding: 20px;
+.forecastContainer {
+  /* padding: 20px;
   background: #f8fafc;
   border-radius: 12px;
+  margin: 20px 0; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 1px solid red;
+  border-radius: 12px;
+  padding: 20px;
   margin: 20px 0;
 }
 
@@ -18,7 +27,8 @@
   padding: 24px;
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin-bottom: 24px;
+  margin-bottom: 12px;
+  width: 100%;
 }
 
 .todayMain {
@@ -69,6 +79,7 @@
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
 .forecastTitle {
@@ -92,6 +103,7 @@
   border-radius: 8px;
   background: #f9fafb;
   transition: background-color 0.2s;
+  width: 100%;
 }
 
 .forecastDay:hover {
@@ -161,4 +173,9 @@
   .dayIcon {
     font-size: 28px;
   }
+}
+
+.container {
+  /* Removed padding and background - handled by parent container */
+  margin: 0;
 } 

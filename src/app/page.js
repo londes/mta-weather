@@ -12,11 +12,13 @@ export default function Home() {
       <div className={styles.mta}>
         <MTAArrivals />
       </div>
-      <div className={styles.precip}>
-        <Precip />
-      </div>
+      <div className={styles.weatherContainer}>
       <div className={styles.weather}>
-        <WeatherForecast />
+          <WeatherForecast />
+        </div>
+        <div className={styles.precip}>
+          <Precip />
+        </div>
       </div>
       <div className={styles.tempSun}></div>
     </div>

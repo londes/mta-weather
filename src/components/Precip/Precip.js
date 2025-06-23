@@ -118,30 +118,6 @@ export default function Precip() {
                     <div>Loading precipitation chart...</div>
                 )}
             </div>
-            
-            <div className={styles.precipitationSummary}>
-                {/* {weatherData && (
-                    <>
-                        <h3>Hourly Details</h3>
-                        <div className={styles.hourlyGrid}>
-                            {weatherData.precipitation.precipitation_probability.slice(0, 6).map((probability, idx) => (
-                                <div key={idx} className={styles.hourlyItem}>
-                                    <span className={styles.time}>
-                                        {new Date(weatherData.precipitation.times[idx]).toLocaleTimeString('en-US', { 
-                                            hour: 'numeric',
-                                            hour12: true 
-                                        })}
-                                    </span>
-                                    <span className={styles.chance}>{probability}%</span>
-                                    <span className={styles.amount}>
-                                        {weatherData.precipitation.precipitation_mm[idx]}mm
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </>
-                )} */}
-            </div>
         </div>
     );
 }
