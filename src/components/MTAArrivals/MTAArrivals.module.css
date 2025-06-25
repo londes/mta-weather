@@ -5,8 +5,7 @@
   justify-content: center;
   width: 100%;
   border-radius: 12px;
-  padding: 20px;
-  margin: 20px 0;
+  margin: 12px 0;
 }
 
 .arrivalContainer {
@@ -16,9 +15,7 @@
     justify-content: center;
     width: 100%;
     border-radius: 12px;
-    padding: 20px;
-    margin: 20px 0;
-    gap: 16px; /* Add space between train arrival items */
+    margin: 0 12px;
 }
 
 .trainArrival {
@@ -36,6 +33,7 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    margin: 8px 0;
 }
 
 .trainArrival:hover {

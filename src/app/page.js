@@ -13,14 +13,13 @@ export default function Home() {
         <MTAArrivals />
       </div>
       <div className={styles.weatherContainer}>
-      <div className={styles.weather}>
+        <div className={styles.weather}>
           <WeatherForecast />
         </div>
         <div className={styles.precip}>
           <Precip />
         </div>
       </div>
-      <div className={styles.tempSun}></div>
     </div>
   );
 }

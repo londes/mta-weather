@@ -68,23 +68,24 @@ export default function WeatherForecast() {
             {/* Today's Weather */}
             <div className={styles.todaySection}>
                 <div className={styles.todayMain}>
-                    <div className={styles.currentTemp}>
-                        {Math.round(currentTemp)}°
+                    <div className={styles.todayContent}>
+                        <div className={styles.currentTemp}>
+                            {Math.round(currentTemp)}°
+                        </div>
+                        <div className={styles.todayDetails}>
+                            <div className={styles.highLow}>
+                                H: {Math.round(today.temperature_max)}° L: {Math.round(today.temperature_min)}°
+                            </div>
+                            <div className={styles.weatherType}>
+                                {(today.weather_type.charAt(0).toUpperCase() + today.weather_type.slice(1)).replace('_', ' ')}
+                            </div>
+                            <div className={styles.rainChance}>
+                                {today.precipitation_probability_max}% chance of rain
+                            </div>
+                        </div>
                     </div>
                     <div className={styles.weatherIcon}>
                         {getWeatherIcon(today.weather_type)}
-                    </div>
-                </div>
-                
-                <div className={styles.todayDetails}>
-                    <div className={styles.highLow}>
-                        H: {Math.round(today.temperature_max)}° L: {Math.round(today.temperature_min)}°
-                    </div>
-                    <div className={styles.weatherType}>
-                        {today.weather_type.charAt(0).toUpperCase() + today.weather_type.slice(1)}
-                    </div>
-                    <div className={styles.rainChance}>
-                        {today.precipitation_probability_max}% chance of rain
                     </div>
                 </div>
             </div>
