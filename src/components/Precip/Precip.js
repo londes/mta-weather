@@ -29,24 +29,104 @@ ChartJS.register(
 
 export default function Precip() {
     const [weatherData, setWeatherData] = useState(null);
+    const [error, setError] = useState(null);
 
-    useEffect(() => {
+    const fetchPrecipitationData = () => {
+        console.log("🌧️ Fetching precipitation data...");
         fetch("/api/weather")
             .then(res => res.json())
             .then(data => {
-                console.log("data received:", data);
+                console.log("🌧️ Precipitation data received:", data);
+                
+                if (data.error) {
+                    console.error("🌧️ API returned error:", data.error);
+                    setError(data.error);
+                    return;
+                }
+                
+                console.log("🌧️ Precipitation times:", data.precipitation?.times);
+                console.log("🌧️ Request time:", data.precipitation?.request_time);
+                console.log("🌧️ First forecast hour:", data.precipitation?.first_forecast_hour);
                 setWeatherData(data);
+                setError(null);
+            })
+            .catch(error => {
+                console.error("🌧️ Error fetching precipitation data:", error);
+                setError(error.message);
             });
+    };
+
+    useEffect(() => {
+        // Initial fetch
+        fetchPrecipitationData();
+        
+        // Set up 30-minute interval for precipitation updates
+        const precipInterval = setInterval(() => {
+            console.log("🌧️ 30-minute precipitation refresh triggered");
+            fetchPrecipitationData();
+        }, 30 * 60 * 1000); // 30 minutes in milliseconds
+        
+        // Cleanup interval on component unmount
+        return () => {
+            console.log("🌧️ Clearing precipitation interval");
+            clearInterval(precipInterval);
+        };
     }, []);
 
+    // Show error state if there's an error
+    if (error) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.precipitationChart}>
+                    <div style={{ 
+                        padding: '40px', 
+                        textAlign: 'center', 
+                        color: '#ef4444',
+                        fontSize: '16px'
+                    }}>
+                        <div>⚠️ Weather data unavailable</div>
+                        <div style={{ fontSize: '14px', marginTop: '8px', color: '#6b7280' }}>
+                            {error}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // Show loading state
+    if (!weatherData || !weatherData.precipitation || !weatherData.precipitation.times) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.precipitationChart}>
+                    <div style={{ 
+                        padding: '40px', 
+                        textAlign: 'center', 
+                        color: '#6b7280',
+                        fontSize: '16px'
+                    }}>
+                        Loading precipitation chart...
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     // Prepare chart data
-    const chartData = weatherData ? {
-        labels: weatherData.precipitation.times.map(time => {
+    const chartData = {
+        labels: weatherData.precipitation.times.map((time, index) => {
             const date = new Date(time);
-            return date.toLocaleTimeString('en-US', { 
+            const formattedTime = date.toLocaleTimeString('en-US', { 
                 hour: 'numeric',
                 hour12: true 
             });
+            
+            // Debug logging for first few times
+            if (index < 6) {
+                console.log(`🌧️ Time ${index}: ${time} -> ${formattedTime} (${date.toISOString()})`);
+            }
+            
+            return formattedTime;
         }),
         datasets: [
             {
@@ -63,7 +143,7 @@ export default function Precip() {
                 pointRadius: 4,
             }
         ]
-    } : null;
+    };
 
     const chartOptions = {
         responsive: true,
@@ -73,8 +153,8 @@ export default function Precip() {
                 display: false
             },
             title: {
-                display: true,
-                text: '',
+                display: false,
+                text: `Next ${weatherData.precipitation.times.length} Hours (Updated: ${new Date(weatherData.precipitation?.request_time || Date.now()).toLocaleTimeString()})`,
                 font: {
                     size: 16,
                     weight: 'bold'
@@ -84,6 +164,15 @@ export default function Precip() {
                 callbacks: {
                     label: function(context) {
                         return `${context.parsed.y}% chance of rain`;
+                    },
+                    title: function(context) {
+                        const originalTime = weatherData.precipitation.times[context[0].dataIndex];
+                        const date = new Date(originalTime);
+                        return date.toLocaleString('en-US', {
+                            weekday: 'short',
+                            hour: 'numeric',
+                            hour12: true
+                        });
                     }
                 }
             }
@@ -112,11 +201,7 @@ export default function Precip() {
     return (
         <div className={styles.container}>
             <div className={styles.precipitationChart}>
-                {weatherData && chartData ? (
-                    <Line data={chartData} options={chartOptions} />
-                ) : (
-                    <div>Loading precipitation chart...</div>
-                )}
+                <Line data={chartData} options={chartOptions} />
             </div>
         </div>
     );

@@ -3,114 +3,147 @@
 import { useEffect, useState } from "react";
 import styles from './WeatherForecast.module.css';
 
+const weatherIcons = {
+  sunny: '☀️',
+  partly_cloudy: '⛅',
+  cloudy: '☁️',
+  rainy: '🌧️',
+  stormy: '⛈️',
+  snowy: '❄️',
+  foggy: '🌫️'
+};
+
 export default function WeatherForecast() {
-    const [weatherData, setWeatherData] = useState(null);
+  const [weatherData, setWeatherData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetch("/api/weather")
-            .then(res => res.json())
-            .then(data => {
-                console.log("Weather data received:", data);
-                setWeatherData(data);
-            })
-            .catch(error => {
-                console.error("Error fetching weather data:", error);
-            });
-    }, []);
-
-    // Helper function to get weather icon/emoji
-    const getWeatherIcon = (weatherType) => {
-        switch (weatherType) {
-            case 'sunny': return '☀️';
-            case 'partly_cloudy': return '⛅';
-            case 'cloudy': return '☁️';
-            case 'rainy': return '🌧️';
-            case 'snowy': return '❄️';
-            case 'stormy': return '⛈️';
-            case 'foggy': return '🌫️';
-            default: return '☁️';
-        }
-    };
-
-    // Helper function to format day name
-    const getDayName = (dateString) => {
-        const date = new Date(dateString + 'T12:00:00'); // Add noon time to avoid timezone issues
-        const today = new Date();
+  const fetchWeatherData = () => {
+    console.log('🌤️ Fetching weather forecast data...');
+    fetch('/api/weather')
+      .then(response => response.json())
+      .then(data => {
+        console.log('🌤️ Weather forecast data received:', data);
         
-        // Check if this date is today
-        const isToday = date.toDateString() === today.toDateString();
-        
-        if (isToday) {
-            return 'Today';
+        if (data.error) {
+          console.error('🌤️ Weather API returned error:', data.error);
+          setError(data.error);
+          setLoading(false);
+          return;
         }
         
-        return date.toLocaleDateString('en-US', { weekday: 'short' });
-    };
+        setWeatherData(data);
+        setError(null);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('🌤️ Error fetching weather forecast data:', error);
+        setError(error.message);
+        setLoading(false);
+      });
+  };
 
-    if (!weatherData) {
-        return <div className={styles.loading}>Loading weather...</div>;
-    }
-
-    // Find today's forecast (first entry should be today)
-    const today = weatherData.daily_forecast[0];
+  useEffect(() => {
+    // Initial fetch
+    fetchWeatherData();
     
-    // Get next 4 days, filtering out today if it appears
-    const upcomingDays = weatherData.daily_forecast.filter((day, index) => {
-        if (index === 0) return false; // Skip first day (today)
-        return true;
-    }).slice(0, 4); // Take only 4 days after today
+    // Set up 30-minute interval for weather updates
+    const weatherInterval = setInterval(() => {
+      console.log('🌤️ 30-minute weather refresh triggered');
+      fetchWeatherData();
+    }, 30 * 60 * 1000); // 30 minutes in milliseconds
+    
+    // Cleanup interval on component unmount
+    return () => {
+      console.log('🌤️ Clearing weather forecast interval');
+      clearInterval(weatherInterval);
+    };
+  }, []);
 
-    // Get current temperature from hourly data (first entry is current/nearest hour)
-    const currentTemp = weatherData.precipitation.temperature[0];
-
+  // Show error state
+  if (error) {
     return (
-        <div className={styles.forecastContainer}>
-            {/* Today's Weather */}
-            <div className={styles.todaySection}>
-                <div className={styles.todayMain}>
-                    <div className={styles.todayContent}>
-                        <div className={styles.currentTemp}>
-                            {Math.round(currentTemp)}°
-                        </div>
-                        <div className={styles.todayDetails}>
-                            <div className={styles.highLow}>
-                                H: {Math.round(today.temperature_max)}° L: {Math.round(today.temperature_min)}°
-                            </div>
-                            <div className={styles.weatherType}>
-                                {(today.weather_type.charAt(0).toUpperCase() + today.weather_type.slice(1)).replace('_', ' ')}
-                            </div>
-                            <div className={styles.rainChance}>
-                                {today.precipitation_probability_max}% chance of rain
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles.weatherIcon}>
-                        {getWeatherIcon(today.weather_type)}
-                    </div>
-                </div>
-            </div>
-
-            {/* 4-Day Forecast (Tomorrow through Day 5) */}
-            <div className={styles.forecastSection}>
-                <div className={styles.forecastGrid}>
-                    {upcomingDays.map((day, index) => (
-                        <div key={index} className={styles.forecastDay}>
-                            <div className={styles.dayName}>
-                                {getDayName(day.date)}
-                            </div>
-                            <div className={styles.dayIcon}>
-                                {getWeatherIcon(day.weather_type)}
-                            </div>
-                            <div className={styles.dayTemp}>
-                                {Math.round(day.temperature_max)}°
-                            </div>
-                            <div className={styles.dayRain}>
-                                {day.precipitation_probability_max}%
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
+      <div className={styles.forecastContainer}>
+        <div style={{ 
+          padding: '40px', 
+          textAlign: 'center', 
+          color: '#ef4444',
+          fontSize: '16px'
+        }}>
+          <div>⚠️ Weather data unavailable</div>
+          <div style={{ fontSize: '14px', marginTop: '8px', color: '#6b7280' }}>
+            {error}
+          </div>
         </div>
+      </div>
     );
+  }
+
+  // Show loading state
+  if (loading || !weatherData || !weatherData.daily_forecast) {
+    return (
+      <div className={styles.forecastContainer}>
+        <div className={styles.loading}>Loading weather forecast...</div>
+      </div>
+    );
+  }
+
+  // Get today's weather (first item in daily forecast)
+  const today = weatherData.daily_forecast[0];
+  const forecast = weatherData.daily_forecast.slice(1, 5); // Next 4 days
+
+  return (
+    <div className={styles.forecastContainer}>
+      {/* Today's Weather Section */}
+      <div className={styles.todaySection}>
+        <div className={styles.todayMain}>
+          <div className={styles.todayContent}>
+            <div className={styles.currentTemp}>
+              {Math.round(today.temperature_max)}°
+            </div>
+            <div className={styles.todayDetails}>
+              <div className={styles.highLow}>
+                {Math.round(today.temperature_min)}° / {Math.round(today.temperature_max)}°
+              </div>
+              <div className={styles.weatherType}>
+                {today.weather_type.replace('_', ' ')}
+              </div>
+              <div className={styles.rainChance}>
+                {today.precipitation_probability_max}% chance of rain
+              </div>
+            </div>
+          </div>
+          <div className={styles.weatherIcon}>
+            {weatherIcons[today.weather_type] || weatherIcons.cloudy}
+          </div>
+        </div>
+      </div>
+
+      {/* 4-Day Forecast Section */}
+      <div className={styles.forecastSection}>
+        <h3 className={styles.forecastTitle}>4-Day Forecast</h3>
+        <div className={styles.forecastGrid}>
+          {forecast.map((day, index) => {
+            const date = new Date(day.date);
+            const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+            
+            return (
+              <div key={index} className={styles.forecastDay}>
+                <div className={styles.dayName}>{dayName}</div>
+                <div className={styles.dayIcon}>
+                  {weatherIcons[day.weather_type] || weatherIcons.cloudy}
+                </div>
+                <div className={styles.dayTemp}>
+                  {Math.round(day.temperature_max)}°
+                </div>
+                <div className={styles.dayRain}>
+                  {day.precipitation_probability_max}%
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
 } 

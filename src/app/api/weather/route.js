@@ -5,6 +5,13 @@ export async function GET(request) {
     const lat = searchParams.get('lat') || '40.7128'; // Default to NYC
     const lon = searchParams.get('lon') || '-74.0060';
     
+    // Get current time for better debugging
+    const now = new Date();
+    const currentHour = now.getHours();
+    console.log(`\n=== WEATHER REQUEST AT ${now.toISOString()} ===`);
+    console.log(`Current hour: ${currentHour}`);
+    
+    // Remove start_date parameter that was causing 400 error
     const url = `https://api.open-meteo.com/v1/forecast?` +
       `latitude=${lat}&longitude=${lon}&` +
       `hourly=precipitation_probability,precipitation,temperature_2m&` +
@@ -12,6 +19,8 @@ export async function GET(request) {
       `forecast_days=5&` +
       `temperature_unit=fahrenheit&` +
       `timezone=auto`;
+    
+    console.log(`API URL: ${url}`);
     
     const response = await fetch(url);
     
@@ -40,22 +49,60 @@ export async function GET(request) {
       console.log('');
     });
     
-    console.log('\n=== HOURLY DATA (First 6 hours) ===');
-    for (let i = 0; i < Math.min(6, data.hourly.time.length); i++) {
-      console.log(`Hour ${i} (${data.hourly.time[i]}):`);
+    console.log('\n=== HOURLY DATA (First 12 hours from API) ===');
+    for (let i = 0; i < Math.min(12, data.hourly.time.length); i++) {
+      const hourTime = new Date(data.hourly.time[i]);
+      console.log(`Hour ${i} (${data.hourly.time[i]} -> ${hourTime.toLocaleTimeString()}):`);
       console.log(`  Temperature: ${data.hourly.temperature_2m[i]}°`);
       console.log(`  Precipitation Probability: ${data.hourly.precipitation_probability[i]}%`);
       console.log(`  Precipitation Amount: ${data.hourly.precipitation[i]}mm`);
       console.log('');
     }
     
-    // Get next 18 hours of precipitation data
+    // Find the current hour index in the hourly data
+    // Look for the first hour that is >= current time
+    const currentHourIndex = data.hourly.time.findIndex(time => {
+      const hourDate = new Date(time);
+      return hourDate >= now;
+    });
+    
+    console.log(`\n=== CURRENT HOUR CALCULATION ===`);
+    console.log(`Current time: ${now.toISOString()}`);
+    console.log(`Current hour index in data: ${currentHourIndex}`);
+    console.log(`First available hour: ${data.hourly.time[0]}`);
+    if (currentHourIndex >= 0) {
+      console.log(`Current/next hour: ${data.hourly.time[currentHourIndex]}`);
+    } else {
+      console.log(`No future hours found, using all available data from start`);
+    }
+    
+    // Get next 18 hours starting from current hour (or start of data if current hour not found)
+    const startIndex = currentHourIndex >= 0 ? currentHourIndex : 0;
+    const endIndex = Math.min(startIndex + 18, data.hourly.time.length);
+    
     const next18Hours = {
-      times: data.hourly.time.slice(0, 18),
-      precipitation_probability: data.hourly.precipitation_probability.slice(0, 18),
-      precipitation_mm: data.hourly.precipitation.slice(0, 18),
-      temperature: data.hourly.temperature_2m.slice(0, 18)
+      times: data.hourly.time.slice(startIndex, endIndex),
+      precipitation_probability: data.hourly.precipitation_probability.slice(startIndex, endIndex),
+      precipitation_mm: data.hourly.precipitation.slice(startIndex, endIndex),
+      temperature: data.hourly.temperature_2m.slice(startIndex, endIndex),
+      // Add metadata for debugging
+      request_time: now.toISOString(),
+      first_forecast_hour: data.hourly.time[startIndex],
+      timezone: data.timezone,
+      start_index: startIndex,
+      current_hour_index: currentHourIndex
     };
+    
+    console.log('\n=== PRECIPITATION FORECAST TIMES ===');
+    console.log(`Request made at: ${now.toISOString()}`);
+    console.log(`Using start index: ${startIndex} (current hour index: ${currentHourIndex})`);
+    console.log(`First forecast hour: ${data.hourly.time[startIndex]}`);
+    console.log(`Timezone: ${data.timezone}`);
+    console.log('Next 6 hours:');
+    for (let i = 0; i < Math.min(6, next18Hours.times.length); i++) {
+      const time = new Date(next18Hours.times[i]);
+      console.log(`  ${i}: ${next18Hours.times[i]} -> ${time.toLocaleTimeString()} (${next18Hours.precipitation_probability[i]}% rain)`);
+    }
     
     // Helper function to determine weather type from WMO weather code and precipitation probability
     const getWeatherType = (weatherCode, precipProbability = 0) => {
