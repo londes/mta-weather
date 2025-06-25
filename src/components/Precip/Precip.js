@@ -153,8 +153,8 @@ export default function Precip() {
                 display: false
             },
             title: {
-                display: false,
-                text: `Next ${weatherData.precipitation.times.length} Hours (Updated: ${new Date(weatherData.precipitation?.request_time || Date.now()).toLocaleTimeString()})`,
+                display: true,
+                text: `🌧️ Chance of Precipitation Next ${weatherData.precipitation.times.length} Hours`, // (all weather data updated: ${new Date(weatherData.precipitation?.request_time || Date.now()).toLocaleTimeString()})`,
                 font: {
                     size: 16,
                     weight: 'bold'
