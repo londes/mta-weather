@@ -63,9 +63,8 @@
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
-
 .trainArrival h2 {
-    font-size: 1.95rem; 
+    font-size: clamp(1.2rem, 2.5vw, 1.95rem);
     margin: 0;
     color: #1f2937;
     font-weight: 600;
@@ -125,8 +124,7 @@
   }
 
   .trainArrival h2 {
-    font-size: 4.5vw;
-    max-font-size: 1.8rem;
+    font-size: clamp(1.2rem, 4.5vw, 1.8rem);
   }
 
   .trainArrival h3 {
