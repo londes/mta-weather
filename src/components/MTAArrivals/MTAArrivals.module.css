@@ -97,3 +97,49 @@
     color: #6b7280;
     font-weight: 400;
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .trainsContainer {
+    flex-direction: column;
+    gap: 3vh;
+    margin: 2vh 0;
+  }
+
+  .arrivalContainer {
+    margin: 0;
+    width: 100%;
+  }
+
+  .trainArrival {
+    padding: 4vw 5vw;
+    margin: 2vh 0;
+    border-radius: 12px;
+  }
+
+  .trainArrival img {
+    width: 12vw;
+    height: 12vw;
+    max-width: 60px;
+    max-height: 60px;
+  }
+
+  .trainArrival h2 {
+    font-size: 4.5vw;
+    max-font-size: 1.8rem;
+  }
+
+  .trainArrival h3 {
+    font-size: 4vw;
+    max-font-size: 1.5rem;
+  }
+
+  .trainArrival > div:first-child {
+    gap: 4vw;
+  }
+
+  .trainArrival > div:last-child > div:last-child {
+    font-size: 3vw;
+    max-font-size: 0.875rem;
+  }
+}

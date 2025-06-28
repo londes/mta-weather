@@ -146,43 +146,92 @@
   font-weight: 500;
 }
 
-/* Responsive Design */
+/* Mobile Responsive Design */
 @media (max-width: 768px) {
-  .container {
-    margin: 10px;
-    padding: 16px;
+  .forecastContainer {
+    padding: 2vh 4vw;
+    gap: 2vh;
+    height: auto;
+    min-height: 50vh;
   }
   
   .todaySection {
-    padding: 20px;
+    padding: 3vh 4vw;
+    margin-bottom: 0;
   }
   
   .todayMain {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 16px;
+    gap: 2vh;
+    min-height: auto;
+    margin-bottom: 2vh;
+  }
+  
+  .todayContent {
+    padding-right: 0;
+    align-items: center;
   }
   
   .currentTemp {
-    font-size: 40px;
+    font-size: 12vw;
+    margin-bottom: 1vh;
   }
   
   .weatherIcon {
-    font-size: 1em;
+    font-size: 15vw;
+    order: -1;
+  }
+  
+  .highLow {
+    font-size: 4vw;
+  }
+  
+  .weatherType {
+    font-size: 3.5vw;
+  }
+  
+  .rainChance {
+    font-size: 3vw;
+  }
+  
+  .forecastSection {
+    padding: 3vh 4vw;
+  }
+  
+  .forecastTitle {
+    font-size: 4vw;
+    margin-bottom: 2vh;
+    text-align: center;
   }
   
   .forecastGrid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 3vw 2vw;
   }
   
   .forecastDay {
-    padding: 12px 8px;
+    padding: 3vh 2vw;
+  }
+  
+  .dayName {
+    font-size: 3vw;
+    margin-bottom: 1.5vh;
   }
   
   .dayIcon {
-    font-size: 28px;
+    font-size: 8vw;
+    margin-bottom: 1.5vh;
+  }
+  
+  .dayTemp {
+    font-size: 3.5vw;
+    margin-bottom: 1vh;
+  }
+  
+  .dayRain {
+    font-size: 2.5vw;
   }
 }
 

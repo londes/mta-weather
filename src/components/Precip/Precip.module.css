@@ -55,19 +55,42 @@
   text-align: center;
 }
 
-/* Responsive design */
+/* Mobile Responsive Design */
 @media (max-width: 768px) {
   .container {
-    margin: 10px;
-    padding: 15px;
+    margin: 0;
+    padding: 4vw;
+    height: auto;
+    min-height: 40vh;
   }
   
   .precipitationChart {
-    height: 250px;
+    flex: 1;
+    min-height: 35vh;
+    height: 35vh;
+    margin-bottom: 3vh;
+  }
+  
+  .precipitationSummary h3 {
+    font-size: 4vw;
+    margin-bottom: 2vh;
   }
   
   .hourlyItem {
-    grid-template-columns: 1fr 50px 50px;
-    padding: 10px;
+    grid-template-columns: 1fr 15vw 15vw;
+    padding: 3vw;
+    gap: 2vw;
+  }
+  
+  .time {
+    font-size: 3.5vw;
+  }
+  
+  .chance {
+    font-size: 3.5vw;
+  }
+  
+  .amount {
+    font-size: 3vw;
   }
 }
