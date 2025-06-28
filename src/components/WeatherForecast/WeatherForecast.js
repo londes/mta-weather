@@ -91,6 +91,9 @@ export default function WeatherForecast() {
   // Get today's weather (first item in daily forecast)
   const today = weatherData.daily_forecast[0];
   const forecast = weatherData.daily_forecast.slice(1, 5); // Next 4 days
+  
+  // Use current hour weather for the emoji (reflects right now)
+  const currentWeather = weatherData.current_hour;
 
   return (
     <div className={styles.forecastContainer}>
@@ -106,15 +109,15 @@ export default function WeatherForecast() {
                 {Math.round(today.temperature_min)}° / {Math.round(today.temperature_max)}°
               </div>
               <div className={styles.weatherType}>
-                {today.weather_type.replace('_', ' ')}
+                {currentWeather.weather_type.replace('_', ' ')}
               </div>
               <div className={styles.rainChance}>
-                {today.precipitation_probability_max}% chance of rain
+                {today.precipitation_probability_max}% chance of rain today
               </div>
             </div>
           </div>
           <div className={styles.weatherIcon}>
-            {weatherIcons[today.weather_type] || weatherIcons.cloudy}
+            {weatherIcons[currentWeather.weather_type] || weatherIcons.cloudy}
           </div>
         </div>
       </div>

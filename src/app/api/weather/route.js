@@ -14,7 +14,7 @@ export async function GET(request) {
     // Remove start_date parameter that was causing 400 error
     const url = `https://api.open-meteo.com/v1/forecast?` +
       `latitude=${lat}&longitude=${lon}&` +
-      `hourly=precipitation_probability,precipitation,temperature_2m&` +
+      `hourly=precipitation_probability,precipitation,temperature_2m,weather_code&` +
       `daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max&` +
       `forecast_days=5&` +
       `temperature_unit=fahrenheit&` +
@@ -113,9 +113,9 @@ export async function GET(request) {
         if (weatherCode === 95) return 'partly_cloudy'; // Light thunderstorm risk = partly cloudy
       }
       
-      // For rain codes, only classify as rainy if meaningful chance (>15%)
+      // For rain codes, only classify as rainy if meaningful chance (>30%)
       if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(weatherCode)) {
-        if (precipProbability > 15) return 'rainy';
+        if (precipProbability > 30) return 'rainy';
         // Light rain risk = cloudy conditions
         return 'cloudy';
       }
@@ -172,6 +172,14 @@ export async function GET(request) {
         timezone: data.timezone
       },
       precipitation: next18Hours,
+      // Add current hour weather for "right now" emoji
+      current_hour: {
+        weather_code: data.hourly.weather_code[startIndex],
+        temperature: data.hourly.temperature_2m[startIndex],
+        precipitation_probability: data.hourly.precipitation_probability[startIndex],
+        time: data.hourly.time[startIndex],
+        weather_type: getWeatherType(data.hourly.weather_code[startIndex], data.hourly.precipitation_probability[startIndex])
+      },
       daily_forecast: dailyForecastWithTypes,
       // Include raw daily data for backward compatibility
       daily_forecast_raw: {
