@@ -13,13 +13,14 @@
 .loading {
   text-align: center;
   padding: 40px;
-  color: #6b7280;
+  color: var(--text-secondary);
   font-size: 16px;
 }
 
 /* Today's Weather Section */
 .todaySection {
-  background: white;
+  background: var(--background);
+  border: 1px solid var(--border-color);
   padding: 1.5vh 1.2vw;
   width: 100%;
   border-radius: 12px;
@@ -45,7 +46,7 @@
 .currentTemp {
   font-size: 4.5vw;
   font-weight: 300;
-  color: #1f2937;
+  color: var(--text-color);
   line-height: 1;
   margin-bottom: 0.4vh;
 }
@@ -67,26 +68,27 @@
 
 .highLow {
   font-size: 1.6vw;
-  color: #4b5563;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 .weatherType {
   font-size: 1.3vw;
-  color: #6b7280;
+  color: var(--text-secondary);
   text-transform: capitalize;
   font-weight: 500;
 }
 
 .rainChance {
   font-size: 1.1vw;
-  color: #3b82f6;
+  color: var(--accent-color);
   font-weight: 500;
 }
 
 /* 4-Day Forecast Section */
 .forecastSection {
-  background: white;
+  background: var(--background);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   width: 100%;
   flex: 0 0 auto;
@@ -97,7 +99,7 @@
   margin: 0 0 1.2vh 0;
   font-size: 1.1vw;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--text-color);
 }
 
 .forecastGrid {
@@ -112,19 +114,20 @@
   align-items: center;
   padding: 1.2vh 0.4vw;
   border-radius: 8px;
-  background: #f9fafb;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
   transition: background-color 0.2s;
   width: 100%;
 }
 
 .forecastDay:hover {
-  background: #f3f4f6;
+  background: var(--input-border);
 }
 
 .dayName {
   font-size: 0.9vw;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-secondary);
   margin-bottom: 0.6vh;
 }
 
@@ -136,13 +139,13 @@
 .dayTemp {
   font-size: 1.1vw;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--text-color);
   margin-bottom: 0.3vh;
 }
 
 .dayRain {
   font-size: 0.8vw;
-  color: #3b82f6;
+  color: var(--accent-color);
   font-weight: 500;
 }
 
