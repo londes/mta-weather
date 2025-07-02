@@ -48,6 +48,306 @@
   }
 }
 
+/* Starry night sky for dark mode */
+[data-theme="dark"]::before,
+:root:not([data-theme="light"])::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: 
+    /* Super bright stars - 3px giants */
+    radial-gradient(3px 3px at 12vw 20vh, #fff, transparent),
+    radial-gradient(3px 3px at 35vw 45vh, rgba(255,255,255,0.95), transparent),
+    radial-gradient(3px 3px at 68vw 15vh, #fff, transparent),
+    radial-gradient(3px 3px at 85vw 70vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(3px 3px at 22vw 85vh, #fff, transparent),
+    radial-gradient(3px 3px at 55vw 35vh, rgba(255,255,255,0.95), transparent),
+    radial-gradient(3px 3px at 88vw 25vh, #fff, transparent),
+    radial-gradient(3px 3px at 8vw 65vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(3px 3px at 42vw 80vh, #fff, transparent),
+    radial-gradient(3px 3px at 75vw 55vh, rgba(255,255,255,0.95), transparent),
+    /* Large bright stars - first set */
+    radial-gradient(2px 2px at 8vw 15vh, #fff, transparent),
+    radial-gradient(2px 2px at 23vw 8vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 45vw 25vh, #eee, transparent),
+    radial-gradient(2px 2px at 67vw 12vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 78vw 35vh, #fff, transparent),
+    radial-gradient(2px 2px at 15vw 45vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 35vw 58vh, #eee, transparent),
+    radial-gradient(2px 2px at 52vw 72vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 85vw 68vh, #fff, transparent),
+    radial-gradient(2px 2px at 92vw 85vh, rgba(255,255,255,0.9), transparent),
+    /* Large bright stars - second set */
+    radial-gradient(2px 2px at 4vw 28vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 33vw 3vh, #fff, transparent),
+    radial-gradient(2px 2px at 56vw 18vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 73vw 52vh, #eee, transparent),
+    radial-gradient(2px 2px at 11vw 75vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 41vw 38vh, #fff, transparent),
+    radial-gradient(2px 2px at 62vw 85vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 87vw 25vh, #eee, transparent),
+    radial-gradient(2px 2px at 26vw 82vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 94vw 48vh, #fff, transparent),
+    /* Large bright stars - third set */
+    radial-gradient(2px 2px at 1vw 55vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 18vw 32vh, #fff, transparent),
+    radial-gradient(2px 2px at 39vw 8vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 58vw 48vh, #eee, transparent),
+    radial-gradient(2px 2px at 71vw 78vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 89vw 15vh, #fff, transparent),
+    radial-gradient(2px 2px at 6vw 92vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 29vw 68vh, #eee, transparent),
+    radial-gradient(2px 2px at 48vw 95vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 82vw 38vh, #fff, transparent),
+    /* Large bright stars - fourth set */
+    radial-gradient(2px 2px at 13vw 18vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 36vw 42vh, #fff, transparent),
+    radial-gradient(2px 2px at 54vw 62vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 75vw 22vh, #eee, transparent),
+    radial-gradient(2px 2px at 91vw 72vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 2vw 8vh, #fff, transparent),
+    radial-gradient(2px 2px at 21vw 88vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 44vw 28vh, #eee, transparent),
+    radial-gradient(2px 2px at 66vw 58vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 97vw 5vh, #fff, transparent),
+    /* Large bright stars - fifth set */
+    radial-gradient(2px 2px at 9vw 42vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 31vw 22vh, #fff, transparent),
+    radial-gradient(2px 2px at 47vw 78vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 69vw 32vh, #eee, transparent),
+    radial-gradient(2px 2px at 83vw 88vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 16vw 62vh, #fff, transparent),
+    radial-gradient(2px 2px at 38vw 12vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 59vw 92vh, #eee, transparent),
+    radial-gradient(2px 2px at 77vw 48vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 95vw 18vh, #fff, transparent),
+    /* Large bright stars - sixth set */
+    radial-gradient(2px 2px at 5vw 72vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 27vw 52vh, #fff, transparent),
+    radial-gradient(2px 2px at 43vw 5vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 64vw 68vh, #eee, transparent),
+    radial-gradient(2px 2px at 81vw 12vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 98vw 82vh, #fff, transparent),
+    radial-gradient(2px 2px at 14vw 38vh, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 32vw 88vh, #eee, transparent),
+    radial-gradient(2px 2px at 50vw 22vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 72vw 95vh, #fff, transparent),
+    /* Medium stars - first set */
+    radial-gradient(1px 1px at 12vw 28vh, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 28vw 18vh, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 38vw 42vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 58vw 32vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 72vw 55vh, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 88vw 22vh, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 5vw 62vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 18vw 78vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 42vw 88vh, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 65vw 95vh, rgba(255,255,255,0.6), transparent),
+    /* Medium stars - second set */
+    radial-gradient(1px 1px at 2vw 38vh, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 21vw 5vh, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 49vw 15vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 68vw 42vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 81vw 65vh, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 9vw 88vh, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 37vw 72vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 59vw 58vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 77vw 8vh, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 95vw 78vh, rgba(255,255,255,0.7), transparent),
+    /* Medium stars - third set */
+    radial-gradient(1px 1px at 7vw 48vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 24vw 25vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 46vw 68vh, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 63vw 8vh, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 84vw 45vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 16vw 85vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 32vw 52vh, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 55vw 78vh, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 79vw 92vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 93vw 32vh, rgba(255,255,255,0.8), transparent),
+    /* Medium stars - fourth set */
+    radial-gradient(1px 1px at 4vw 15vh, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 27vw 62vh, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 43vw 35vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 61vw 88vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 76vw 18vh, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 98vw 62vh, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 14vw 72vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 34vw 12vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 51vw 45vh, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 86vw 82vh, rgba(255,255,255,0.7), transparent),
+    /* Medium stars - fifth set */
+    radial-gradient(1px 1px at 11vw 35vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 25vw 75vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 40vw 55vh, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 57vw 25vh, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 74vw 85vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 90vw 5vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 6vw 95vh, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 22vw 45vh, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 48vw 85vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 70vw 15vh, rgba(255,255,255,0.8), transparent),
+    /* Medium stars - sixth set */
+    radial-gradient(1px 1px at 3vw 25vh, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 19vw 65vh, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 41vw 18vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 60vw 75vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 78vw 35vh, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 92vw 95vh, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 8vw 18vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 26vw 38vh, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 45vw 92vh, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 67vw 52vh, rgba(255,255,255,0.7), transparent),
+    /* Deep space gradient background */
+    linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+  animation: sparkle 20s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Additional twinkling layer for more stars */
+[data-theme="dark"]::after,
+:root:not([data-theme="light"])::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: 
+    /* Small scattered stars - first set */
+    radial-gradient(1px 1px at 3vw 5vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 19vw 38vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 31vw 65vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 47vw 48vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 61vw 18vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 76vw 78vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 89vw 42vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 7vw 82vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 25vw 92vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 54vw 8vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 83vw 58vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 96vw 28vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 14vw 52vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 41vw 75vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 69vw 88vh, rgba(255,255,255,0.5), transparent),
+    /* Small scattered stars - second set */
+    radial-gradient(1px 1px at 6vw 22vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 17vw 12vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 29vw 35vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 44vw 68vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 53vw 25vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 66vw 45vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 79vw 15vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 91vw 65vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 1vw 72vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 22vw 58vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 36vw 18vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 51vw 85vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 74vw 32vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 86vw 88vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 98vw 52vh, rgba(255,255,255,0.3), transparent),
+    /* Small scattered stars - third set */
+    radial-gradient(1px 1px at 8vw 68vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 20vw 28vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 33vw 85vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 45vw 55vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 57vw 12vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 70vw 72vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 82vw 35vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 94vw 78vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 11vw 45vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 26vw 8vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 38vw 95vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 50vw 62vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 64vw 25vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 77vw 85vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 90vw 18vh, rgba(255,255,255,0.5), transparent),
+    /* Small scattered stars - fourth set */
+    radial-gradient(1px 1px at 5vw 32vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 15vw 68vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 28vw 45vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 40vw 15vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 52vw 78vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 65vw 52vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 78vw 25vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 87vw 72vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 99vw 38vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 12vw 88vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 23vw 15vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 37vw 62vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 49vw 35vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 62vw 92vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 75vw 58vh, rgba(255,255,255,0.3), transparent),
+    /* Small scattered stars - fifth set */
+    radial-gradient(1px 1px at 4vw 48vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 16vw 28vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 30vw 78vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 42vw 58vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 56vw 5vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 68vw 85vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 80vw 48vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 93vw 68vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 9vw 25vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 24vw 92vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 35vw 38vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 48vw 72vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 63vw 18vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 76vw 95vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 88vw 35vh, rgba(255,255,255,0.5), transparent),
+    /* Small scattered stars - sixth set */
+    radial-gradient(1px 1px at 2vw 62vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 13vw 8vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 27vw 85vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 39vw 48vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 53vw 68vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 67vw 28vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 81vw 92vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 95vw 55vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 7vw 15vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 21vw 75vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 34vw 32vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 46vw 88vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 59vw 42vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 73vw 12vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 85vw 78vh, rgba(255,255,255,0.3), transparent),
+    /* Small scattered stars - seventh set */
+    radial-gradient(1px 1px at 10vw 58vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 18vw 22vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 32vw 95vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 44vw 38vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 58vw 82vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 71vw 18vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 84vw 62vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 97vw 85vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 6vw 35vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 25vw 72vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 37vw 5vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 51vw 52vh, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 66vw 88vh, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 79vw 32vh, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 92vw 75vh, rgba(255,255,255,0.5), transparent);
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+  animation: sparkle 15s linear infinite reverse;
+  pointer-events: none;
+  z-index: -1;
+}
+
 html,
 body {
   max-width: 100vw;
@@ -61,6 +361,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
 }
 
 * {
