@@ -5,20 +5,27 @@ export async function GET(request) {
     const lat = searchParams.get('lat') || '40.7128'; // Default to NYC
     const lon = searchParams.get('lon') || '-74.0060';
     
-    // Get current time for better debugging
-    const now = new Date();
-    const currentHour = now.getHours();
-    console.log(`\n=== WEATHER REQUEST AT ${now.toISOString()} ===`);
-    console.log(`Current hour: ${currentHour}`);
+    // Use Brooklyn/NYC timezone explicitly
+    const brooklynTimezone = 'America/New_York';
     
-    // Remove start_date parameter that was causing 400 error
+    // Get current time in Brooklyn timezone
+    const now = new Date();
+    const brooklynTime = new Date(now.toLocaleString("en-US", {timeZone: brooklynTimezone}));
+    const currentHour = brooklynTime.getHours();
+    
+    console.log(`\n=== WEATHER REQUEST AT ${now.toISOString()} ===`);
+    console.log(`Server time: ${now.toISOString()}`);
+    console.log(`Brooklyn time: ${brooklynTime.toISOString()}`);
+    console.log(`Brooklyn current hour: ${currentHour}`);
+    
+    // Use explicit timezone in API request
     const url = `https://api.open-meteo.com/v1/forecast?` +
       `latitude=${lat}&longitude=${lon}&` +
       `hourly=precipitation_probability,precipitation,temperature_2m,weather_code&` +
       `daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max&` +
       `forecast_days=5&` +
       `temperature_unit=fahrenheit&` +
-      `timezone=auto`;
+      `timezone=${encodeURIComponent(brooklynTimezone)}`;
     
     console.log(`API URL: ${url}`);
     
@@ -59,15 +66,16 @@ export async function GET(request) {
       console.log('');
     }
     
-    // Find the current hour index in the hourly data
-    // Look for the first hour that is >= current time
+    // Find the current hour index in the hourly data using Brooklyn time
+    // Look for the first hour that is >= current Brooklyn time
     const currentHourIndex = data.hourly.time.findIndex(time => {
       const hourDate = new Date(time);
-      return hourDate >= now;
+      return hourDate >= brooklynTime;
     });
     
     console.log(`\n=== CURRENT HOUR CALCULATION ===`);
-    console.log(`Current time: ${now.toISOString()}`);
+    console.log(`Server time: ${now.toISOString()}`);
+    console.log(`Brooklyn time: ${brooklynTime.toISOString()}`);
     console.log(`Current hour index in data: ${currentHourIndex}`);
     console.log(`First available hour: ${data.hourly.time[0]}`);
     if (currentHourIndex >= 0) {
@@ -87,6 +95,7 @@ export async function GET(request) {
       temperature: data.hourly.temperature_2m.slice(startIndex, endIndex),
       // Add metadata for debugging
       request_time: now.toISOString(),
+      brooklyn_time: brooklynTime.toISOString(),
       first_forecast_hour: data.hourly.time[startIndex],
       timezone: data.timezone,
       start_index: startIndex,
@@ -94,7 +103,8 @@ export async function GET(request) {
     };
     
     console.log('\n=== PRECIPITATION FORECAST TIMES ===');
-    console.log(`Request made at: ${now.toISOString()}`);
+    console.log(`Server request time: ${now.toISOString()}`);
+    console.log(`Brooklyn time: ${brooklynTime.toISOString()}`);
     console.log(`Using start index: ${startIndex} (current hour index: ${currentHourIndex})`);
     console.log(`First forecast hour: ${data.hourly.time[startIndex]}`);
     console.log(`Timezone: ${data.timezone}`);

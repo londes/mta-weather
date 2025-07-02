@@ -119,9 +119,11 @@ export default function Precip() {
     const chartData = {
         labels: weatherData.precipitation.times.map((time, index) => {
             const date = new Date(time);
+            // Use Brooklyn timezone for consistent display
             const formattedTime = date.toLocaleTimeString('en-US', { 
                 hour: 'numeric',
-                hour12: true 
+                hour12: true,
+                timeZone: 'America/New_York'
             });
             
             // Enhanced debugging for timing issues
@@ -129,6 +131,7 @@ export default function Precip() {
                 console.log(`🌧️ Time ${index}: ${time} -> ${formattedTime}`);
                 console.log(`  Full date: ${date.toISOString()}`);
                 console.log(`  Local time: ${date.toLocaleString()}`);
+                console.log(`  Brooklyn time: ${date.toLocaleString('en-US', { timeZone: 'America/New_York' })}`);
                 console.log(`  Hours since epoch: ${Math.floor(date.getTime() / (1000 * 60 * 60))}`);
             }
             
@@ -177,7 +180,8 @@ export default function Precip() {
                         return date.toLocaleString('en-US', {
                             weekday: 'short',
                             hour: 'numeric',
-                            hour12: true
+                            hour12: true,
+                            timeZone: 'America/New_York'
                         });
                     }
                 }
