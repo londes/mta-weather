@@ -23,18 +23,6 @@ export default function Settings() {
         <div className={styles.settingsContainer}>
             <form>
                 <div className={styles.formGroup}>
-                    <h4>Subway Line & Station</h4>
-                    <label htmlFor='subwayLine'>Subway Line</label>
-                    <input type="dropdown" id="subwayLine" name="subwayLine" />
-                    <label htmlFor="mtaStation">MTA Station</label>
-                    <input type="dropdown" id="mtaStation" name="mtaStation" /> 
-                </div>
-                <div className={styles.formGroup}>
-                    <h4>Weather</h4>
-                    <label htmlFor='zipCode'>Zip Code</label>
-                    <input type="text" id="zipCode" name="zipCode" />
-                </div>
-                <div className={styles.formGroup}>
                     <h4>Theme</h4>
                     <div className={styles.radioGroup}>
                         <label className={styles.radioLabel}>
@@ -59,7 +47,18 @@ export default function Settings() {
                         </label>
                     </div>
                 </div>
-                <button type="submit" className={styles.submitButton}>Save</button>
+                <div className={styles.formGroup}>
+                    <h4>Subway Line & Station</h4>
+                    <label htmlFor='subwayLine'>Subway Line</label>
+                    <input type="dropdown" id="subwayLine" name="subwayLine" />
+                    <label htmlFor="mtaStation">MTA Station</label>
+                    <input type="dropdown" id="mtaStation" name="mtaStation" /> 
+                </div>
+                <div className={styles.formGroup}>
+                    <h4>Weather</h4>
+                    <label htmlFor='zipCode'>Zip Code</label>
+                    <input type="text" id="zipCode" name="zipCode" />
+                </div>
             </form>
         </div>
     </div>

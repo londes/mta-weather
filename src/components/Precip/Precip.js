@@ -33,10 +33,15 @@ export default function Precip() {
 
     const fetchPrecipitationData = () => {
         console.log("🌧️ Fetching precipitation data...");
+        console.log(`🌧️ Current time: ${new Date().toISOString()}`);
         fetch("/api/weather")
             .then(res => res.json())
             .then(data => {
                 console.log("🌧️ Precipitation data received:", data);
+                console.log(`🌧️ API request time: ${data.precipitation?.request_time}`);
+                console.log(`🌧️ First forecast hour: ${data.precipitation?.first_forecast_hour}`);
+                console.log(`🌧️ Current hour index: ${data.precipitation?.current_hour_index}`);
+                console.log(`🌧️ Start index: ${data.precipitation?.start_index}`);
                 
                 if (data.error) {
                     console.error("🌧️ API returned error:", data.error);
@@ -45,8 +50,6 @@ export default function Precip() {
                 }
                 
                 console.log("🌧️ Precipitation times:", data.precipitation?.times);
-                console.log("🌧️ Request time:", data.precipitation?.request_time);
-                console.log("🌧️ First forecast hour:", data.precipitation?.first_forecast_hour);
                 setWeatherData(data);
                 setError(null);
             })
@@ -121,9 +124,12 @@ export default function Precip() {
                 hour12: true 
             });
             
-            // Debug logging for first few times
+            // Enhanced debugging for timing issues
             if (index < 6) {
-                console.log(`🌧️ Time ${index}: ${time} -> ${formattedTime} (${date.toISOString()})`);
+                console.log(`🌧️ Time ${index}: ${time} -> ${formattedTime}`);
+                console.log(`  Full date: ${date.toISOString()}`);
+                console.log(`  Local time: ${date.toLocaleString()}`);
+                console.log(`  Hours since epoch: ${Math.floor(date.getTime() / (1000 * 60 * 60))}`);
             }
             
             return formattedTime;
@@ -154,7 +160,7 @@ export default function Precip() {
             },
             title: {
                 display: true,
-                text: `🌧️ Chance of Precipitation Next ${weatherData.precipitation.times.length} Hours`, // (all weather data updated: ${new Date(weatherData.precipitation?.request_time || Date.now()).toLocaleTimeString()})`,
+                text: `🌧️ Chance of Precipitation Next ${weatherData.precipitation.times.length} Hours (Updated: ${new Date(weatherData.precipitation?.request_time || Date.now()).toLocaleTimeString()})`,
                 font: {
                     size: 16,
                     weight: 'bold'
