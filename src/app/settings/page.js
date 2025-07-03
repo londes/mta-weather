@@ -4,21 +4,27 @@ import Link from "next/link";
 import styles from './settings.module.css';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useStation } from '../../contexts/StationContext';
-import { useState } from 'react';
 
 export default function Settings() {
   const { theme, setTheme } = useTheme();
-  const { selectedStation, setSelectedStation } = useStation();
-  const [subwayLine, setSubwayLine] = useState('G'); // Default to G train
+  const { selectedLine, setSelectedLine, selectedStation, setSelectedStation, getAvailableStations } = useStation();
 
   const handleThemeChange = (e) => {
     setTheme(e.target.value);
   };
 
   const handleSubwayLineChange = (e) => {
-    setSubwayLine(e.target.value);
-    // Reset station when line changes
-    setSelectedStation('');
+    const newLine = e.target.value;
+    setSelectedLine(newLine);
+    
+    // Set appropriate default station for each line
+    if (newLine === 'G') {
+      setSelectedStation('greenpoint-ave'); // OG Greenpoint Ave station
+    } else if (newLine === 'L') {
+      setSelectedStation('8th-ave'); // Manhattan terminal
+    } else {
+      setSelectedStation('');
+    }
   };
 
   const handleStationChange = (e) => {
@@ -27,25 +33,62 @@ export default function Settings() {
 
   // Station options based on selected line
   const getStationOptions = () => {
-    if (subwayLine === 'G') {
+    if (selectedLine === 'G') {
       return [
-        { value: '', label: 'Select a station...' },
-        { value: 'court-sq', label: 'Court Square' },
-        { value: '21st-st', label: '21st St-Queensbridge' },
-        { value: 'greenpoint', label: 'Greenpoint Avenue' },
-        { value: 'nassau', label: 'Nassau Avenue' },
-        { value: 'manhattan', label: 'Manhattan Avenue' },
-        { value: 'graham', label: 'Graham Avenue' },
-        { value: 'grand-st', label: 'Grand Street' },
-        { value: 'metropolitan', label: 'Metropolitan Avenue' }
+        { value: '', label: 'Select a station' },
+        { value: 'greenpoint-ave', label: 'Greenpoint Ave' },
+        { value: 'nassau-ave', label: 'Nassau Ave' },
+        { value: 'metropolitan-ave', label: 'Metropolitan Ave' },
+        { value: 'broadway', label: 'Broadway' },
+        { value: 'flushing-ave', label: 'Flushing Ave' },
+        { value: 'myrtle-willoughby', label: 'Myrtle-Willoughby Avs' },
+        { value: 'bedford-nostrand', label: 'Bedford-Nostrand Avs' },
+        { value: 'classon-ave', label: 'Classon Ave' },
+        { value: 'clinton-washington', label: 'Clinton-Washington Avs' },
+        { value: 'fulton-st', label: 'Fulton St' },
+        { value: 'hoyt-schermerhorn', label: 'Hoyt-Schermerhorn Sts' },
+        { value: 'bergen-st', label: 'Bergen St' },
+        { value: 'carroll-st', label: 'Carroll St' },
+        { value: 'smith-9th', label: 'Smith-9 Sts' },
+        { value: '4th-ave-9th-st', label: '4 Av-9 St' },
+        { value: '7th-ave', label: '7 Av' },
+        { value: 'prospect-park', label: 'Prospect Park' },
+        { value: 'fort-hamilton', label: 'Fort Hamilton Pkwy' },
+        { value: '15th-st-prospect', label: '15 St-Prospect Park' },
+        { value: 'church-ave', label: 'Church Ave' }
       ];
-    } else if (subwayLine === 'L') {
+    } else if (selectedLine === 'L') {
       return [
-        { value: '', label: 'Select a station...' },
-        { value: 'coming-soon', label: 'L train stations - Coming Soon!' }
+        { value: '', label: 'Select a station' },
+        // Manhattan stations
+        { value: '8th-ave', label: '8 Av (Manhattan Terminal)' },
+        { value: '6th-ave', label: '6 Av' },
+        { value: 'union-square', label: '14 St-Union Sq' },
+        { value: '3rd-ave', label: '3 Av' },
+        { value: '1st-ave', label: '1 Av' },
+        // Brooklyn stations
+        { value: 'bedford-ave', label: 'Bedford Av' },
+        { value: 'lorimer-st', label: 'Lorimer St' },
+        { value: 'graham-ave', label: 'Graham Av' },
+        { value: 'grand-st', label: 'Grand St' },
+        { value: 'montrose-ave', label: 'Montrose Av' },
+        { value: 'morgan-ave', label: 'Morgan Av' },
+        { value: 'jefferson-st', label: 'Jefferson St' },
+        { value: 'dekalb-ave', label: 'DeKalb Av' },
+        { value: 'myrtle-wyckoff', label: 'Myrtle-Wyckoff Avs' },
+        { value: 'halsey-st', label: 'Halsey St' },
+        { value: 'wilson-ave', label: 'Wilson Av' },
+        { value: 'bushwick-aberdeen', label: 'Bushwick Av-Aberdeen St' },
+        { value: 'broadway-junction', label: 'Broadway Junction' },
+        { value: 'atlantic-ave', label: 'Atlantic Av' },
+        { value: 'sutter-ave', label: 'Sutter Av' },
+        { value: 'livonia-ave', label: 'Livonia Av' },
+        { value: 'new-lots-ave', label: 'New Lots Av' },
+        { value: 'east-105th-st', label: 'East 105 St' },
+        { value: 'canarsie-rockaway', label: 'Canarsie-Rockaway Pkwy (Brooklyn Terminal)' }
       ];
     }
-    return [{ value: '', label: 'Select a line first...' }];
+    return [{ value: '', label: 'Select a line first' }];
   };
 
   return (
@@ -100,12 +143,12 @@ export default function Settings() {
                     <select 
                         id="subwayLine" 
                         name="subwayLine" 
-                        value={subwayLine}
+                        value={selectedLine}
                         onChange={handleSubwayLineChange}
                         className={styles.selectField}
                     >
                         <option value="G">🟢 G Train (Crosstown)</option>
-                        <option value="L">🔵 L Train (14th Street-Canarsie) - Coming Soon!</option>
+                        <option value="L">🔵 L Train (14th Street-Canarsie)</option>
                     </select>
                     <label htmlFor="mtaStation">MTA Station</label>
                     <select 
@@ -114,7 +157,7 @@ export default function Settings() {
                         value={selectedStation}
                         onChange={handleStationChange}
                         className={styles.selectField}
-                        disabled={!subwayLine}
+                        disabled={!selectedLine}
                     >
                         {getStationOptions().map(option => (
                             <option key={option.value} value={option.value}>

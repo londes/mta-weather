@@ -7,19 +7,19 @@ import styles from "./MTAArrivals.module.css";
 export default function MTAArrivals() {
   const [mtaData, setMtaData] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
-  const { getCurrentStation } = useStation();
+  const { selectedLine, getCurrentStation } = useStation();
 
   const fetchMTAData = () => {
-    console.log("fetching mta data");
-    fetch("/api/mta")
+    console.log(`Fetching ${selectedLine} train data`);
+    fetch(`/api/mta?line=${selectedLine}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("MTA data received:", data);
+        console.log(`${selectedLine} train data received:`, data);
         setMtaData(data);
         setLastUpdated(new Date());
       })
       .catch((error) => {
-        console.error("Error fetching MTA data:", error);
+        console.error(`Error fetching ${selectedLine} train data:`, error);
       });
   };
 
@@ -32,7 +32,7 @@ export default function MTAArrivals() {
 
     // Cleanup interval on component unmount
     return () => clearInterval(interval);
-  }, []);
+  }, [selectedLine]); // Re-fetch when line changes
 
   // Helper function to get soonest arrivals for any station
   const getSoonestArrivals = (allTrips, stationId) => {
@@ -41,7 +41,7 @@ export default function MTAArrivals() {
     const arrivals = [];
     
     allTrips.forEach(trip => {
-      if (trip.routeId !== 'G') return;
+      if (trip.routeId !== selectedLine) return;
       
       trip.stopUpdates?.forEach(stop => {
         if (stop.stopId === stationId && stop.arrivalTime) {
@@ -71,12 +71,53 @@ export default function MTAArrivals() {
 
   // Get current station info from context
   const currentStation = getCurrentStation();
-  const northboundArrivals = getSoonestArrivals(mtaData?.allTripsWithStops, currentStation.northboundId);
-  const southboundArrivals = getSoonestArrivals(mtaData?.allTripsWithStops, currentStation.southboundId);
+  
+  if (!currentStation) {
+    return <div>Loading station information...</div>;
+  }
+
+  // Get direction IDs based on train line
+  const getDirectionIds = () => {
+    if (selectedLine === 'G') {
+      return {
+        direction1Id: currentStation.northboundId,
+        direction2Id: currentStation.southboundId,
+        direction1Label: 'Court Square (Queens)',
+        direction2Label: 'Church Ave (Brooklyn)'
+      };
+    } else if (selectedLine === 'L') {
+      return {
+        direction1Id: currentStation.eastboundId,
+        direction2Id: currentStation.westboundId,
+        direction1Label: 'Canarsie (Brooklyn)',
+        direction2Label: '8th Avenue (Manhattan)'
+      };
+    }
+    return {
+      direction1Id: null,
+      direction2Id: null,
+      direction1Label: 'Direction 1',
+      direction2Label: 'Direction 2'
+    };
+  };
+
+  const { direction1Id, direction2Id, direction1Label, direction2Label } = getDirectionIds();
+  const direction1Arrivals = getSoonestArrivals(mtaData?.allTripsWithStops, direction1Id);
+  const direction2Arrivals = getSoonestArrivals(mtaData?.allTripsWithStops, direction2Id);
+
+  // Get train icon based on line
+  const getTrainIcon = () => {
+    if (selectedLine === 'G') {
+      return "/NYCS-bull-trans-G-Std.svg";
+    } else if (selectedLine === 'L') {
+      return "/NYCS-bull-trans-L-Std.svg.png"; // Use the PNG file you added
+    }
+    return "/NYCS-bull-trans-G-Std.svg"; // fallback
+  };
 
   return (
     <div>
-      <h1>G Train - {currentStation.displayName}</h1>
+      <h1>{selectedLine} Train - {currentStation.displayName}</h1>
       <p>
         Last Updated: {lastUpdated ? lastUpdated.toLocaleTimeString() : 'Loading...'} 
       </p>
@@ -85,12 +126,12 @@ export default function MTAArrivals() {
         <div>
           <div className={styles.trainsContainer}>
             <div className={styles.arrivalContainer}>
-              {northboundArrivals.length > 0 ? (
-                northboundArrivals.map((arrival, i) => (
+              {direction1Arrivals.length > 0 ? (
+                direction1Arrivals.map((arrival, i) => (
                 <div key={i} className={styles.trainArrival}>
                   <div>
-                    <img src="/NYCS-bull-trans-G-Std.svg" alt="G Train" />
-                    <div><h2>Court Square (Queens)</h2></div>
+                    <img src={getTrainIcon()} alt={`${selectedLine} Train`} />
+                    <div><h2>{direction1Label}</h2></div>
                   </div>
                   <div>
                     <div><h3>{arrival.minutesAway <= 0 ? 'Arriving now' : `${arrival.minutesAway} minutes`}</h3></div>
@@ -99,16 +140,16 @@ export default function MTAArrivals() {
                 </div>
               ))
               ) : (
-                <div>No upcoming northbound trains</div>
+                <div>No upcoming trains to {direction1Label}</div>
               )}
             </div>
             <div className={styles.arrivalContainer}>
-            {southboundArrivals.length ? ( 
-              southboundArrivals.map((arrival, i) => (
+            {direction2Arrivals.length ? ( 
+              direction2Arrivals.map((arrival, i) => (
               <div key={i} className={styles.trainArrival}>
                 <div>
-                  <img src="/NYCS-bull-trans-G-Std.svg" alt="G Train" />
-                  <div><h2>Church Ave (Brooklyn)</h2></div>
+                  <img src={getTrainIcon()} alt={`${selectedLine} Train`} />
+                  <div><h2>{direction2Label}</h2></div>
                 </div>
                 <div>
                   <div><h3>{arrival.minutesAway <= 0 ? 'Arriving now' : `${arrival.minutesAway} minutes`}</h3></div>
@@ -117,7 +158,7 @@ export default function MTAArrivals() {
               </div>
             ))
             ) : (
-              <div>No upcoming southbound trains</div>
+              <div>No upcoming trains to {direction2Label}</div>
             )}
             </div>
           </div>
