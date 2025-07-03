@@ -14,52 +14,69 @@ export function useStation() {
 
 // Station mapping from dropdown values to MTA station IDs and display names
 const stationMapping = {
-  // G Train stations
-  'greenpoint-ave': {
-    displayName: 'Greenpoint Ave',
+  // G Train stations (North to South: Court Square to Clinton-Washington)
+  'court-square': {
+    displayName: 'Court Square',
     northboundId: 'G22N',
     southboundId: 'G22S'
   },
-  'nassau-ave': {
-    displayName: 'Nassau Ave', 
+  '21st-st': {
+    displayName: '21st St-Queensbridge',
     northboundId: 'G24N',
     southboundId: 'G24S'
   },
-  'metropolitan-ave': {
-    displayName: 'Metropolitan Ave',
+  'greenpoint-ave': {
+    displayName: 'Greenpoint Ave',
     northboundId: 'G26N',
     southboundId: 'G26S'
   },
-  'broadway': {
-    displayName: 'Broadway',
+  'nassau-ave': {
+    displayName: 'Nassau Ave', 
     northboundId: 'G28N',
     southboundId: 'G28S'
   },
-  'flushing-ave': {
-    displayName: 'Flushing Ave',
+  'manhattan-ave': {
+    displayName: 'Manhattan Ave',
     northboundId: 'G29N',
     southboundId: 'G29S'
   },
-  'myrtle-willoughby': {
-    displayName: 'Myrtle-Willoughby Avs',
+  'graham-ave': {
+    displayName: 'Graham Ave',
     northboundId: 'G30N',
     southboundId: 'G30S'
   },
-  'bedford-nostrand': {
-    displayName: 'Bedford-Nostrand Avs',
+  'grand-st-g': {
+    displayName: 'Grand St',
     northboundId: 'G31N',
     southboundId: 'G31S'
   },
-  'classon-ave': {
-    displayName: 'Classon Ave',
+  'metropolitan-lorimer': {
+    displayName: 'Metropolitan Ave/Lorimer St',
     northboundId: 'G32N',
     southboundId: 'G32S'
   },
-  'clinton-washington': {
-    displayName: 'Clinton-Washington Avs',
+  'myrtle-willoughby': {
+    displayName: 'Myrtle-Willoughby Avs',
     northboundId: 'G33N',
     southboundId: 'G33S'
   },
+  'bedford-nostrand': {
+    displayName: 'Bedford-Nostrand Avs',
+    northboundId: 'G34N',
+    southboundId: 'G34S'
+  },
+  'classon-ave': {
+    displayName: 'Classon Ave',
+    northboundId: 'G35N',
+    southboundId: 'G35S'
+  },
+  'clinton-washington': {
+    displayName: 'Clinton-Washington Avs',
+    northboundId: 'G36N',
+    southboundId: 'G36S'
+  },
+
+  // Keeping the rest of the old G train stations for now (will be unused)
   'fulton-st': {
     displayName: 'Fulton St',
     northboundId: 'G34N',

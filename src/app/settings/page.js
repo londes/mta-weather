@@ -36,26 +36,18 @@ export default function Settings() {
     if (selectedLine === 'G') {
       return [
         { value: '', label: 'Select a station' },
-        { value: 'greenpoint-ave', label: 'Greenpoint Ave' },
+        { value: 'court-square', label: 'Court Square (Queens Terminal)' },
+        { value: '21st-st', label: '21st St-Queensbridge' },
+        { value: 'greenpoint-ave', label: 'Greenpoint Ave (OG Station!)' },
         { value: 'nassau-ave', label: 'Nassau Ave' },
-        { value: 'metropolitan-ave', label: 'Metropolitan Ave' },
-        { value: 'broadway', label: 'Broadway' },
-        { value: 'flushing-ave', label: 'Flushing Ave' },
+        { value: 'manhattan-ave', label: 'Manhattan Ave' },
+        { value: 'graham-ave', label: 'Graham Ave' },
+        { value: 'grand-st-g', label: 'Grand St' },
+        { value: 'metropolitan-lorimer', label: 'Metropolitan Ave/Lorimer St' },
         { value: 'myrtle-willoughby', label: 'Myrtle-Willoughby Avs' },
         { value: 'bedford-nostrand', label: 'Bedford-Nostrand Avs' },
         { value: 'classon-ave', label: 'Classon Ave' },
-        { value: 'clinton-washington', label: 'Clinton-Washington Avs' },
-        { value: 'fulton-st', label: 'Fulton St' },
-        { value: 'hoyt-schermerhorn', label: 'Hoyt-Schermerhorn Sts' },
-        { value: 'bergen-st', label: 'Bergen St' },
-        { value: 'carroll-st', label: 'Carroll St' },
-        { value: 'smith-9th', label: 'Smith-9 Sts' },
-        { value: '4th-ave-9th-st', label: '4 Av-9 St' },
-        { value: '7th-ave', label: '7 Av' },
-        { value: 'prospect-park', label: 'Prospect Park' },
-        { value: 'fort-hamilton', label: 'Fort Hamilton Pkwy' },
-        { value: '15th-st-prospect', label: '15 St-Prospect Park' },
-        { value: 'church-ave', label: 'Church Ave' }
+        { value: 'clinton-washington', label: 'Clinton-Washington Avs' }
       ];
     } else if (selectedLine === 'L') {
       return [

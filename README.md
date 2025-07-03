@@ -1,42 +1,62 @@
-# MTA Train Times and Weather Display
+# NYC Transit & Weather Display
 
-A real-time wall-mounted dashboard displaying NYC weather forecasts and MTA G train arrivals, designed for continuous display on monitors.
+A real-time wall-mounted dashboard displaying NYC weather forecasts and MTA subway arrivals, designed for continuous display on monitors with full customization options.
 
 ![Dashboard Preview](https://via.placeholder.com/800x400/1f2937/ffffff?text=Weather+%26+Transit+Dashboard)
+
+## ✨ Features
 
 ### 🌤️ Weather Display
 - **Current Weather**: Today's temperature, conditions, and precipitation chance
 - **4-Day Forecast**: Extended weather outlook with icons and temperatures
 - **Precipitation Chart**: 18-hour precipitation probability graph starting from current time
 - **Automatic Updates**: Weather data refreshes every 30 minutes
+- **Brooklyn Timezone**: All times displayed in Eastern Time (America/New_York)
 
-### 🚇 MTA Transit (G Train)
-- **Real-time Arrivals**: Live G train arrival times and delays
+### 🚇 MTA Transit
+- **Multi-Line Support**: G Train (Crosstown) and L Train (14th Street-Canarsie)
+- **Station Selection**: Choose from all stations on supported lines
+- **Real-time Arrivals**: Live subway arrival times and delays
 - **Service Alerts**: Current service disruptions and notifications
 - **Auto-refresh**: Transit data updates every 29 seconds for real-time accuracy
+
+### 🎨 Theme System
+- **Light Mode**: Clean daytime interface with sky and clouds background
+- **Dark Mode**: Starry night sky with 420+ twinkling stars
+- **Auto Mode**: Automatically switches based on sunrise/sunset times
+- **Persistent Settings**: Theme preferences saved across sessions
+
+### ⚙️ Settings & Customization
+- **Settings Page**: Full configuration interface accessible via gear icon
+- **Station Selection**: Choose your preferred subway line and station
+- **Theme Control**: Manual theme selection or automatic day/night switching
+- **Persistent Storage**: All settings saved to localStorage
 
 ### 📱 Display Optimization
 - **Wall-Mounted Design**: Optimized for continuous display on monitors
 - **Responsive Scaling**: Uses viewport units (vh/vw) to scale across different screen sizes
-- **No Scrolling**: All content fits on one screen (1080p to 1440p tested)
+- **Mobile Support**: Vertical scrollable layout for mobile devices
+- **No Scrolling**: Desktop content fits on one screen (1080p to 1440p tested)
 - **Modern UI**: Clean, readable interface perfect for ambient displays
 
 ## 🛠️ Tech Stack
 
 ### Frontend
 - **Next.js 14** - React framework with App Router
-- **React 18** - Component-based UI
+- **React 18** - Component-based UI with Context API
 - **Chart.js + react-chartjs-2** - Interactive precipitation charts
-- **CSS Modules** - Scoped styling with viewport-based units
+- **CSS Modules** - Scoped styling with CSS custom properties
+- **React Router** - Navigation between dashboard and settings
 
 ### APIs & Data Sources
-- **Open-Meteo API** - Weather forecasts and precipitation data
-- **MTA GTFS-RT** - Real-time subway arrival data
+- **Open-Meteo API** - Weather forecasts, precipitation data, and sunrise/sunset times
+- **MTA GTFS-RT** - Real-time subway arrival data for G and L trains
 - **gtfs-realtime-bindings** - GTFS-RT protobuf parsing
 
 ### Architecture
 - **Server-Side API Routes** - Next.js API endpoints for data fetching
 - **Client-Side Components** - Real-time updates with separate refresh intervals
+- **Context Providers** - Global state management for themes and station selection
 - **Error Handling** - Graceful degradation when APIs are unavailable
 
 ## 🚀 Getting Started
@@ -69,6 +89,11 @@ A real-time wall-mounted dashboard displaying NYC weather forecasts and MTA G tr
    http://localhost:3000
    ```
 
+5. **Access Settings**
+   ```
+   http://localhost:3000/settings
+   ```
+
 ### Production Deployment
 ```bash
 npm run build
@@ -83,11 +108,15 @@ npm start
   - Current conditions and temperature
   - 5-day daily forecast
   - 18-hour precipitation probability
+  - Sunrise/sunset times for auto theme switching
 - **Coverage**: NYC area (40.7128°N, 74.0060°W)
+- **Timezone**: America/New_York for accurate local times
 
 ### MTA Data (GTFS-RT)
 - **Update Frequency**: Every 29 seconds
-- **Line Coverage**: G train (Crosstown Local)
+- **Line Coverage**: 
+  - **G Train**: 12 stations (Court Square to Clinton-Washington)
+  - **L Train**: 24 stations (8th Avenue to Canarsie-Rockaway Parkway)
 - **Data Points**:
   - Real-time arrival predictions
   - Service alerts and delays
@@ -102,35 +131,57 @@ src/
 │   ├── api/
 │   │   ├── weather/route.js    # Weather API endpoint
 │   │   └── mta/route.js        # MTA GTFS-RT endpoint
+│   ├── settings/
+│   │   ├── page.js            # Settings page
+│   │   └── settings.module.css # Settings styling
 │   ├── page.js                 # Main dashboard layout
-│   └── page.module.css         # Viewport-based styling
+│   ├── page.module.css         # Viewport-based styling
+│   ├── layout.js              # Root layout with providers
+│   └── globals.css            # Global theme variables
 ├── components/
 │   ├── WeatherForecast/        # Today + 4-day forecast
 │   ├── Precip/                 # Precipitation chart
-│   └── MTAArrivals/            # G train arrivals
+│   └── MTAArrivals/            # Subway arrivals
+├── contexts/
+│   ├── ThemeContext.js         # Theme state management
+│   └── StationContext.js       # Station selection management
 ```
 
 ### Key Implementation Features
+
+**Multi-Line Transit Support**
+- Dynamic station mapping for G and L trains
+- Configurable station selection via settings
+- Persistent station preferences in localStorage
+
+**Advanced Theme System**
+- CSS custom properties for seamless theme switching
+- Sunrise/sunset API integration for auto mode
+- Animated backgrounds (stars for dark, clouds for light)
+- Smooth transitions between themes
 
 **Viewport-Based Scaling**
 - Uses `vh` and `vw` units for consistent scaling
 - Layout fits 100vh height across different monitors
 - Proportional text and spacing scaling
+- Mobile-responsive vertical layout
+
+**Context-Driven State Management**
+- ThemeContext for global theme state
+- StationContext for subway line/station selection
+- Persistent storage with localStorage
+- Real-time updates across components
 
 **Intelligent Refresh Intervals**
 - Weather: 30-minute intervals (matches API update frequency)
 - MTA: 29-second intervals (real-time transit requirements)
 - Separate intervals prevent unnecessary API calls
 
-**Error Handling**
-- Graceful degradation when APIs fail
-- User-friendly error messages
-- Component-level error boundaries
-
-**Time-Aware Data Processing**
+**Enhanced Time Handling**
+- Brooklyn timezone for all time calculations
 - Precipitation charts start from current hour
-- Handles timezone conversions automatically
-- Smart current-hour detection in weather data
+- Sunrise/sunset-based auto theme switching
+- Proper timezone handling for deployed environments
 
 ## 🎨 Display Configuration
 
@@ -148,7 +199,18 @@ src/
   - **4-Day Forecast**: ~40% of weather container
   - **Precipitation Chart**: 70% width of weather container
 
+### Theme Backgrounds
+- **Light Mode**: Subtle blue sky gradient with drifting white clouds
+- **Dark Mode**: Deep space background with 420+ twinkling stars in multiple layers
+- **Auto Mode**: Switches based on sunrise/sunset times from weather API
+
 ## 🔧 Customization
+
+### Station Configuration
+Use the settings page (`/settings`) to:
+- Select subway line (G or L train)
+- Choose your preferred station
+- Configure theme preferences
 
 ### Location Configuration
 Update coordinates in `src/app/api/weather/route.js`:
@@ -157,12 +219,10 @@ const lat = searchParams.get('lat') || '40.7128'; // Your latitude
 const lon = searchParams.get('lon') || '-74.0060'; // Your longitude
 ```
 
-### MTA Line Configuration  
-Modify line group in `src/app/api/mta/route.js` for different subway lines:
-```javascript
-// Current: G train (Crosstown)
-// Change URL for different line groups
-```
+### Adding New Subway Lines
+1. Update `stationMapping` in `src/contexts/StationContext.js`
+2. Add station options in `src/app/settings/page.js`
+3. Modify MTA API endpoint to handle new line feeds
 
 ### Refresh Intervals
 Adjust in component `useEffect` hooks:
@@ -183,12 +243,41 @@ Adjust in component `useEffect` hooks:
 **MTA data unavailable**
 - MTA GTFS-RT feeds occasionally have outages
 - Check MTA service status
-- Verify G train is running
+- Verify selected subway line is running
+
+**Settings not saving**
+- Check browser localStorage permissions
+- Clear browser cache and reload
+- Verify JavaScript is enabled
 
 **Display scaling issues**
 - Ensure browser is in fullscreen mode
 - Check monitor resolution settings
 - Verify CSS viewport units are supported
+
+**Theme not switching automatically**
+- Check if auto mode is selected in settings
+- Verify weather API is providing sunrise/sunset data
+- Check browser console for theme-related errors
+
+## 📱 Mobile Support
+
+The app includes a mobile-responsive layout:
+- Vertical scrollable interface
+- Stacked train arrival times
+- Compact weather sections
+- Touch-friendly navigation
+
+## 🔄 Recent Updates
+
+- ✅ Multi-line support (G and L trains)
+- ✅ Comprehensive settings page
+- ✅ Advanced theme system with auto mode
+- ✅ Station selection for all supported lines
+- ✅ Enhanced backgrounds (stars and clouds)
+- ✅ Improved timezone handling
+- ✅ Mobile responsive design
+- ✅ Context-based state management
 
 ## 📝 License
 
@@ -199,17 +288,10 @@ MIT License - feel free to use and modify for your own projects.
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Test on different screen sizes
-5. Submit a pull request
+4. Submit a pull request
 
-## 📧 Support
+## 🙏 Acknowledgments
 
-For issues or questions, please open a GitHub issue with:
-- Browser and version
-- Monitor resolution
-- Console error messages (if any)
-- Description of the problem
-
----
-
-*Built for NYC commuters who want to stay informed about weather and transit at a glance.* 🗽
+- MTA for providing public GTFS-RT feeds
+- Open-Meteo for free weather API access
+- Chart.js for beautiful precipitation visualizations
