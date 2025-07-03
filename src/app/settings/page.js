@@ -3,12 +3,13 @@
 import Link from "next/link";
 import styles from './settings.module.css';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useStation } from '../../contexts/StationContext';
 import { useState } from 'react';
 
 export default function Settings() {
   const { theme, setTheme } = useTheme();
+  const { selectedStation, setSelectedStation } = useStation();
   const [subwayLine, setSubwayLine] = useState('G'); // Default to G train
-  const [mtaStation, setMtaStation] = useState('');
 
   const handleThemeChange = (e) => {
     setTheme(e.target.value);
@@ -17,11 +18,11 @@ export default function Settings() {
   const handleSubwayLineChange = (e) => {
     setSubwayLine(e.target.value);
     // Reset station when line changes
-    setMtaStation('');
+    setSelectedStation('');
   };
 
   const handleStationChange = (e) => {
-    setMtaStation(e.target.value);
+    setSelectedStation(e.target.value);
   };
 
   // Station options based on selected line
@@ -29,25 +30,14 @@ export default function Settings() {
     if (subwayLine === 'G') {
       return [
         { value: '', label: 'Select a station...' },
+        { value: 'court-sq', label: 'Court Square' },
+        { value: '21st-st', label: '21st St-Queensbridge' },
         { value: 'greenpoint', label: 'Greenpoint Avenue' },
         { value: 'nassau', label: 'Nassau Avenue' },
-        { value: 'metropolitan', label: 'Metropolitan Avenue' },
-        { value: 'broadway', label: 'Broadway' },
-        { value: 'flushing', label: 'Flushing Avenue' },
-        { value: 'myrtle-willoughby', label: 'Myrtle-Willoughby' },
-        { value: 'bedford-nostrand', label: 'Bedford-Nostrand' },
-        { value: 'classon', label: 'Classon Avenue' },
-        { value: 'clinton-washington', label: 'Clinton-Washington' },
-        { value: 'fulton', label: 'Fulton Street' },
-        { value: 'hoyt-schermerhorn', label: 'Hoyt-Schermerhorn' },
-        { value: 'bergen', label: 'Bergen Street' },
-        { value: 'carroll', label: 'Carroll Street' },
-        { value: 'smith-9th', label: 'Smith-9th Streets' },
-        { value: '4th-9th', label: '4th Avenue-9th Street' },
-        { value: '7th-avenue', label: '7th Avenue' },
-        { value: '15th-prospect', label: '15th Street-Prospect Park' },
-        { value: 'fort-hamilton', label: 'Fort Hamilton Parkway' },
-        { value: 'church', label: 'Church Avenue' }
+        { value: 'manhattan', label: 'Manhattan Avenue' },
+        { value: 'graham', label: 'Graham Avenue' },
+        { value: 'grand-st', label: 'Grand Street' },
+        { value: 'metropolitan', label: 'Metropolitan Avenue' }
       ];
     } else if (subwayLine === 'L') {
       return [
@@ -111,7 +101,7 @@ export default function Settings() {
                     <select 
                         id="mtaStation" 
                         name="mtaStation"
-                        value={mtaStation}
+                        value={selectedStation}
                         onChange={handleStationChange}
                         className={styles.selectField}
                         disabled={!subwayLine}

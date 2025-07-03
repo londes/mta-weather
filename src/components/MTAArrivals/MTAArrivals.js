@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useStation } from "../../contexts/StationContext";
 import styles from "./MTAArrivals.module.css";
 
 export default function MTAArrivals() {
   const [mtaData, setMtaData] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
+  const { getCurrentStation } = useStation();
 
   const fetchMTAData = () => {
     console.log("fetching mta data");
@@ -67,16 +69,14 @@ export default function MTAArrivals() {
       .slice(0, 2);
   };
 
-  // Using G28 as Greenpoint Avenue 
-  const greenpointNorth = "G26N";
-  const greenpointSouth = "G26S";
-
-  const northboundArrivals = getSoonestArrivals(mtaData?.allTripsWithStops, greenpointNorth);
-  const southboundArrivals = getSoonestArrivals(mtaData?.allTripsWithStops, greenpointSouth);
+  // Get current station info from context
+  const currentStation = getCurrentStation();
+  const northboundArrivals = getSoonestArrivals(mtaData?.allTripsWithStops, currentStation.northboundId);
+  const southboundArrivals = getSoonestArrivals(mtaData?.allTripsWithStops, currentStation.southboundId);
 
   return (
     <div>
-      <h1>G Train - Greenpoint Avenue</h1>
+      <h1>G Train - {currentStation.displayName}</h1>
       <p>
         Last Updated: {lastUpdated ? lastUpdated.toLocaleTimeString() : 'Loading...'} 
       </p>
