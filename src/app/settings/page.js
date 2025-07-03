@@ -36,9 +36,9 @@ export default function Settings() {
     if (selectedLine === 'G') {
       return [
         { value: '', label: 'Select a station' },
-        { value: 'court-square', label: 'Court Square (Queens Terminal)' },
+        { value: 'court-square', label: 'Court Square' },
         { value: '21st-st', label: '21st St-Queensbridge' },
-        { value: 'greenpoint-ave', label: 'Greenpoint Ave (OG Station!)' },
+        { value: 'greenpoint-ave', label: 'Greenpoint Ave' },
         { value: 'nassau-ave', label: 'Nassau Ave' },
         { value: 'manhattan-ave', label: 'Manhattan Ave' },
         { value: 'graham-ave', label: 'Graham Ave' },
@@ -53,7 +53,7 @@ export default function Settings() {
       return [
         { value: '', label: 'Select a station' },
         // Manhattan stations
-        { value: '8th-ave', label: '8 Av (Manhattan Terminal)' },
+        { value: '8th-ave', label: '8 Av)' },
         { value: '6th-ave', label: '6 Av' },
         { value: 'union-square', label: '14 St-Union Sq' },
         { value: '3rd-ave', label: '3 Av' },
@@ -77,7 +77,7 @@ export default function Settings() {
         { value: 'livonia-ave', label: 'Livonia Av' },
         { value: 'new-lots-ave', label: 'New Lots Av' },
         { value: 'east-105th-st', label: 'East 105 St' },
-        { value: 'canarsie-rockaway', label: 'Canarsie-Rockaway Pkwy (Brooklyn Terminal)' }
+        { value: 'canarsie-rockaway', label: 'Canarsie-Rockaway Pkwy' }
       ];
     }
     return [{ value: '', label: 'Select a line first' }];
