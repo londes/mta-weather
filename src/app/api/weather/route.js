@@ -22,7 +22,7 @@ export async function GET(request) {
     const url = `https://api.open-meteo.com/v1/forecast?` +
       `latitude=${lat}&longitude=${lon}&` +
       `hourly=precipitation_probability,precipitation,temperature_2m,weather_code&` +
-      `daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max&` +
+      `daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,sunrise,sunset&` +
       `forecast_days=5&` +
       `temperature_unit=fahrenheit&` +
       `timezone=${encodeURIComponent(brooklynTimezone)}`;
@@ -162,7 +162,9 @@ export async function GET(request) {
         temperature_max: data.daily.temperature_2m_max[index],
         temperature_min: data.daily.temperature_2m_min[index],
         precipitation_sum: data.daily.precipitation_sum[index],
-        precipitation_probability_max: data.daily.precipitation_probability_max[index]
+        precipitation_probability_max: data.daily.precipitation_probability_max[index],
+        sunrise: data.daily.sunrise[index],
+        sunset: data.daily.sunset[index]
       };
     });
     
@@ -198,7 +200,9 @@ export async function GET(request) {
         temperature_max: data.daily.temperature_2m_max,
         temperature_min: data.daily.temperature_2m_min,
         precipitation_sum: data.daily.precipitation_sum,
-        precipitation_probability_max: data.daily.precipitation_probability_max
+        precipitation_probability_max: data.daily.precipitation_probability_max,
+        sunrise: data.daily.sunrise,
+        sunset: data.daily.sunset
       }
     });
     

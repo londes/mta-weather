@@ -82,6 +82,16 @@ export default function Settings() {
                             />
                             Dark
                         </label>
+                        <label className={styles.radioLabel}>
+                            <input 
+                                type="radio" 
+                                name="theme" 
+                                value="auto" 
+                                checked={theme === 'auto'}
+                                onChange={handleThemeChange}
+                            />
+                            Auto (Sunrise/Sunset)
+                        </label>
                     </div>
                 </div>
                 <div className={styles.formGroup}>
