@@ -43,17 +43,13 @@ export default function Settings() {
         { value: 'manhattan-ave', label: 'Manhattan Ave' },
         { value: 'graham-ave', label: 'Graham Ave' },
         { value: 'grand-st-g', label: 'Grand St' },
-        { value: 'metropolitan-lorimer', label: 'Metropolitan Ave/Lorimer St' },
-        { value: 'myrtle-willoughby', label: 'Myrtle-Willoughby Avs' },
-        { value: 'bedford-nostrand', label: 'Bedford-Nostrand Avs' },
-        { value: 'classon-ave', label: 'Classon Ave' },
-        { value: 'clinton-washington', label: 'Clinton-Washington Avs' }
+        { value: 'metropolitan-lorimer', label: 'Metropolitan Ave/Lorimer St' }
       ];
     } else if (selectedLine === 'L') {
       return [
         { value: '', label: 'Select a station' },
         // Manhattan stations
-        { value: '8th-ave', label: '8 Av)' },
+        { value: '8th-ave', label: '8 Av (Manhattan Terminal)' },
         { value: '6th-ave', label: '6 Av' },
         { value: 'union-square', label: '14 St-Union Sq' },
         { value: '3rd-ave', label: '3 Av' },
@@ -61,7 +57,7 @@ export default function Settings() {
         // Brooklyn stations
         { value: 'bedford-ave', label: 'Bedford Av' },
         { value: 'lorimer-st', label: 'Lorimer St' },
-        { value: 'graham-ave', label: 'Graham Av' },
+        { value: 'graham-ave-l', label: 'Graham Av' },
         { value: 'grand-st', label: 'Grand St' },
         { value: 'montrose-ave', label: 'Montrose Av' },
         { value: 'morgan-ave', label: 'Morgan Av' },
@@ -77,7 +73,7 @@ export default function Settings() {
         { value: 'livonia-ave', label: 'Livonia Av' },
         { value: 'new-lots-ave', label: 'New Lots Av' },
         { value: 'east-105th-st', label: 'East 105 St' },
-        { value: 'canarsie-rockaway', label: 'Canarsie-Rockaway Pkwy' }
+        { value: 'canarsie-rockaway', label: 'Canarsie-Rockaway Pkwy (Brooklyn Terminal)' }
       ];
     }
     return [{ value: '', label: 'Select a line first' }];

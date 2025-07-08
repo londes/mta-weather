@@ -14,7 +14,7 @@ export function useStation() {
 
 // Station mapping from dropdown values to MTA station IDs and display names
 const stationMapping = {
-  // G Train stations (North to South: Court Square to Clinton-Washington)
+  // G Train stations (North to South: Court Square to Metropolitan Ave/Lorimer St)
   'court-square': {
     displayName: 'Court Square',
     northboundId: 'G22N',
@@ -55,83 +55,6 @@ const stationMapping = {
     northboundId: 'G32N',
     southboundId: 'G32S'
   },
-  'myrtle-willoughby': {
-    displayName: 'Myrtle-Willoughby Avs',
-    northboundId: 'G33N',
-    southboundId: 'G33S'
-  },
-  'bedford-nostrand': {
-    displayName: 'Bedford-Nostrand Avs',
-    northboundId: 'G34N',
-    southboundId: 'G34S'
-  },
-  'classon-ave': {
-    displayName: 'Classon Ave',
-    northboundId: 'G35N',
-    southboundId: 'G35S'
-  },
-  'clinton-washington': {
-    displayName: 'Clinton-Washington Avs',
-    northboundId: 'G36N',
-    southboundId: 'G36S'
-  },
-
-  // Keeping the rest of the old G train stations for now (will be unused)
-  'fulton-st': {
-    displayName: 'Fulton St',
-    northboundId: 'G34N',
-    southboundId: 'G34S'
-  },
-  'hoyt-schermerhorn': {
-    displayName: 'Hoyt-Schermerhorn Sts',
-    northboundId: 'G35N',
-    southboundId: 'G35S'
-  },
-  'bergen-st': {
-    displayName: 'Bergen St',
-    northboundId: 'G36N',
-    southboundId: 'G36S'
-  },
-  'carroll-st': {
-    displayName: 'Carroll St',
-    northboundId: 'A42N',
-    southboundId: 'A42S'
-  },
-  'smith-9th': {
-    displayName: 'Smith-9 Sts',
-    northboundId: 'A41N',
-    southboundId: 'A41S'
-  },
-  '4th-ave-9th-st': {
-    displayName: '4 Av-9 St',
-    northboundId: 'A40N',
-    southboundId: 'A40S'
-  },
-  '7th-ave': {
-    displayName: '7 Av',
-    northboundId: 'A39N',
-    southboundId: 'A39S'
-  },
-  'prospect-park': {
-    displayName: 'Prospect Park',
-    northboundId: 'A38N',
-    southboundId: 'A38S'
-  },
-  'fort-hamilton': {
-    displayName: 'Fort Hamilton Pkwy',
-    northboundId: 'A37N',
-    southboundId: 'A37S'
-  },
-  '15th-st-prospect': {
-    displayName: '15 St-Prospect Park',
-    northboundId: 'A36N',
-    southboundId: 'A36S'
-  },
-  'church-ave': {
-    displayName: 'Church Ave',
-    northboundId: 'A31N',
-    southboundId: 'A31S'
-  },
 
   // L Train stations - Manhattan (5 stations)
   '8th-ave': {
@@ -171,7 +94,7 @@ const stationMapping = {
     eastboundId: 'L10N',
     westboundId: 'L10S'
   },
-  'graham-ave': {
+  'graham-ave-l': {
     displayName: 'Graham Av',
     eastboundId: 'L11N',
     westboundId: 'L11S'

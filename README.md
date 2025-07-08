@@ -115,7 +115,7 @@ npm start
 ### MTA Data (GTFS-RT)
 - **Update Frequency**: Every 29 seconds
 - **Line Coverage**: 
-  - **G Train**: 12 stations (Court Square to Clinton-Washington)
+  - **G Train**: 8 stations (Court Square to Metropolitan Ave/Lorimer St)
   - **L Train**: 24 stations (8th Avenue to Canarsie-Rockaway Parkway)
 - **Data Points**:
   - Real-time arrival predictions
