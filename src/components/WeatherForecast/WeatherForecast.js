@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useStation } from "../../contexts/StationContext";
 import styles from './WeatherForecast.module.css';
 
 const weatherIcons = {
@@ -17,10 +18,15 @@ export default function WeatherForecast() {
   const [weatherData, setWeatherData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { selectedZipCode } = useStation();
 
   const fetchWeatherData = () => {
     console.log('🌤️ Fetching weather forecast data...');
-    fetch('/api/weather')
+    console.log(`🌤️ Using ZIP code: ${selectedZipCode}`);
+    
+    const apiUrl = selectedZipCode ? `/api/weather?zip=${selectedZipCode}` : '/api/weather';
+    
+    fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
         console.log('🌤️ Weather forecast data received:', data);
@@ -58,7 +64,7 @@ export default function WeatherForecast() {
       console.log('🌤️ Clearing weather forecast interval');
       clearInterval(weatherInterval);
     };
-  }, []);
+  }, [selectedZipCode]); // Re-fetch when zip code changes
 
   // Show error state
   if (error) {

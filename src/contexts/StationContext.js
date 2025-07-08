@@ -184,11 +184,13 @@ const stationMapping = {
 export function StationProvider({ children }) {
   const [selectedLine, setSelectedLine] = useState('G'); // Default to G train
   const [selectedStation, setSelectedStation] = useState('greenpoint-ave'); // Default to Greenpoint Ave
+  const [selectedZipCode, setSelectedZipCode] = useState('11222'); // Default to Brooklyn (Greenpoint)
 
   // Load saved selections from localStorage on mount
   useEffect(() => {
     const savedLine = localStorage.getItem('selectedLine');
     const savedStation = localStorage.getItem('selectedStation');
+    const savedZipCode = localStorage.getItem('selectedZipCode');
     
     if (savedLine) {
       setSelectedLine(savedLine);
@@ -203,6 +205,10 @@ export function StationProvider({ children }) {
       // Default to Greenpoint Ave for G train or if no valid saved station
       setSelectedStation('greenpoint-ave');
     }
+    
+    if (savedZipCode) {
+      setSelectedZipCode(savedZipCode);
+    }
   }, []);
 
   // Save selections to localStorage when they change
@@ -213,6 +219,10 @@ export function StationProvider({ children }) {
   useEffect(() => {
     localStorage.setItem('selectedStation', selectedStation);
   }, [selectedStation]);
+
+  useEffect(() => {
+    localStorage.setItem('selectedZipCode', selectedZipCode);
+  }, [selectedZipCode]);
 
   useEffect(() => {
     // Set default station when line changes
@@ -244,6 +254,8 @@ export function StationProvider({ children }) {
     setSelectedLine,
     selectedStation,
     setSelectedStation,
+    selectedZipCode,
+    setSelectedZipCode,
     getCurrentStation,
     getAvailableStations,
     stationMapping

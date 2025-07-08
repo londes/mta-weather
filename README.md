@@ -12,6 +12,7 @@ A real-time wall-mounted dashboard displaying NYC weather forecasts and MTA subw
 - **Precipitation Chart**: 18-hour precipitation probability graph starting from current time
 - **Automatic Updates**: Weather data refreshes every 30 minutes
 - **Brooklyn Timezone**: All times displayed in Eastern Time (America/New_York)
+- **Multi-Borough Support**: Weather data for all 5 NYC boroughs via ZIP code selection
 
 ### 🚇 MTA Transit
 - **Multi-Line Support**: G Train (Crosstown) and L Train (14th Street-Canarsie)
@@ -30,6 +31,7 @@ A real-time wall-mounted dashboard displaying NYC weather forecasts and MTA subw
 - **Settings Page**: Full configuration interface accessible via gear icon
 - **Station Selection**: Choose your preferred subway line and station
 - **Theme Control**: Manual theme selection or automatic day/night switching
+- **Weather Location**: Select from predefined borough ZIP codes or enter custom ZIP code
 - **Persistent Storage**: All settings saved to localStorage
 
 ### 📱 Display Optimization
@@ -109,7 +111,9 @@ npm start
   - 5-day daily forecast
   - 18-hour precipitation probability
   - Sunrise/sunset times for auto theme switching
-- **Coverage**: NYC area (40.7128°N, 74.0060°W)
+- **Coverage**: All 5 NYC boroughs with 30+ predefined ZIP codes
+  - Manhattan, Brooklyn, Queens, Bronx, Staten Island
+  - Custom ZIP code input for any location
 - **Timezone**: America/New_York for accurate local times
 
 ### MTA Data (GTFS-RT)
@@ -211,9 +215,22 @@ Use the settings page (`/settings`) to:
 - Select subway line (G or L train)
 - Choose your preferred station
 - Configure theme preferences
+- Set weather location by borough or custom ZIP code
 
-### Location Configuration
-Update coordinates in `src/app/api/weather/route.js`:
+### Weather Location Configuration
+The app supports weather data for all NYC boroughs:
+
+**Predefined Borough ZIP Codes:**
+- **Manhattan**: 10009 (East Village), 10001 (Midtown), 10014 (West Village), 10019 (Hell's Kitchen), 10025 (Upper West Side), 10128 (Upper East Side)
+- **Brooklyn**: 11222 (Greenpoint), 11211 (Williamsburg), 11215 (Park Slope), 11201 (Brooklyn Heights), 11226 (Flatbush), 11235 (Brighton Beach)
+- **Queens**: 11367 (Flushing), 11101 (Long Island City), 11375 (Forest Hills), 11103 (Astoria), 11691 (Far Rockaway), 11385 (Ridgewood)
+- **Bronx**: 10457 (Mount Hope), 10451 (Concourse), 10463 (Riverdale), 10458 (Fordham), 10467 (Norwood), 10461 (Westchester Square)
+- **Staten Island**: 10314 (Sunnyside), 10301 (St. George), 10306 (Tottenville), 10312 (Annadale), 10304 (Stapleton), 10309 (Pleasant Plains)
+
+**Custom ZIP Codes**: Enter any valid US ZIP code for weather data outside NYC.
+
+### Location Configuration (Advanced)
+For direct coordinate access, update in `src/app/api/weather/route.js`:
 ```javascript
 const lat = searchParams.get('lat') || '40.7128'; // Your latitude
 const lon = searchParams.get('lon') || '-74.0060'; // Your longitude

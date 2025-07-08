@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";    
+import { useEffect, useState } from "react";
+import { useStation } from "../../contexts/StationContext";
 import styles from './Precip.module.css';
 import {
   Chart as ChartJS,
@@ -30,11 +31,16 @@ ChartJS.register(
 export default function Precip() {
     const [weatherData, setWeatherData] = useState(null);
     const [error, setError] = useState(null);
+    const { selectedZipCode } = useStation();
 
     const fetchPrecipitationData = () => {
         console.log("🌧️ Fetching precipitation data...");
+        console.log(`🌧️ Using ZIP code: ${selectedZipCode}`);
         console.log(`🌧️ Current time: ${new Date().toISOString()}`);
-        fetch("/api/weather")
+        
+        const apiUrl = selectedZipCode ? `/api/weather?zip=${selectedZipCode}` : '/api/weather';
+        
+        fetch(apiUrl)
             .then(res => res.json())
             .then(data => {
                 console.log("🌧️ Precipitation data received:", data);
@@ -74,7 +80,7 @@ export default function Precip() {
             console.log("🌧️ Clearing precipitation interval");
             clearInterval(precipInterval);
         };
-    }, []);
+    }, [selectedZipCode]); // Re-fetch when zip code changes
 
     // Show error state if there's an error
     if (error) {

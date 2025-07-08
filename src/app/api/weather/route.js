@@ -1,9 +1,93 @@
 // src/app/api/weather/route.js
+
+// ZIP code to coordinates mapping for NYC boroughs
+const zipCodeCoordinates = {
+  // Manhattan
+  '10009': { lat: 40.7282, lon: -73.9776, name: 'Manhattan (East Village)' },
+  '10001': { lat: 40.7505, lon: -73.9934, name: 'Manhattan (Midtown)' },
+  '10014': { lat: 40.7341, lon: -74.0064, name: 'Manhattan (West Village)' },
+  '10019': { lat: 40.7648, lon: -73.9808, name: 'Manhattan (Hell\'s Kitchen)' },
+  '10025': { lat: 40.7957, lon: -73.9667, name: 'Manhattan (Upper West Side)' },
+  '10128': { lat: 40.7816, lon: -73.9509, name: 'Manhattan (Upper East Side)' },
+  
+  // Brooklyn
+  '11222': { lat: 40.7272, lon: -73.9469, name: 'Brooklyn (Greenpoint)' },
+  '11211': { lat: 40.7081, lon: -73.9571, name: 'Brooklyn (Williamsburg)' },
+  '11215': { lat: 40.6694, lon: -73.9865, name: 'Brooklyn (Park Slope)' },
+  '11201': { lat: 40.6928, lon: -73.9903, name: 'Brooklyn (Brooklyn Heights)' },
+  '11226': { lat: 40.6464, lon: -73.9618, name: 'Brooklyn (Flatbush)' },
+  '11235': { lat: 40.5795, lon: -73.9707, name: 'Brooklyn (Brighton Beach)' },
+  
+  // Queens
+  '11367': { lat: 40.7282, lon: -73.8370, name: 'Queens (Flushing)' },
+  '11101': { lat: 40.7505, lon: -73.9342, name: 'Queens (Long Island City)' },
+  '11375': { lat: 40.7214, lon: -73.8370, name: 'Queens (Forest Hills)' },
+  '11103': { lat: 40.7648, lon: -73.9137, name: 'Queens (Astoria)' },
+  '11691': { lat: 40.6022, lon: -73.7594, name: 'Queens (Far Rockaway)' },
+  '11385': { lat: 40.7011, lon: -73.8803, name: 'Queens (Ridgewood)' },
+  
+  // Bronx
+  '10457': { lat: 40.8448, lon: -73.8956, name: 'Bronx (Mount Hope)' },
+  '10451': { lat: 40.8210, lon: -73.9246, name: 'Bronx (Concourse)' },
+  '10463': { lat: 40.8795, lon: -73.9095, name: 'Bronx (Riverdale)' },
+  '10458': { lat: 40.8677, lon: -73.8901, name: 'Bronx (Fordham)' },
+  '10467': { lat: 40.8735, lon: -73.8776, name: 'Bronx (Norwood)' },
+  '10461': { lat: 40.8483, lon: -73.8370, name: 'Bronx (Westchester Square)' },
+  
+  // Staten Island
+  '10314': { lat: 40.5795, lon: -74.1502, name: 'Staten Island (Sunnyside)' },
+  '10301': { lat: 40.6323, lon: -74.0977, name: 'Staten Island (St. George)' },
+  '10306': { lat: 40.5665, lon: -74.1204, name: 'Staten Island (Tottenville)' },
+  '10312': { lat: 40.5447, lon: -74.1776, name: 'Staten Island (Annadale)' },
+  '10304': { lat: 40.6095, lon: -74.0854, name: 'Staten Island (Stapleton)' },
+  '10309': { lat: 40.5286, lon: -74.2090, name: 'Staten Island (Pleasant Plains)' }
+};
+
+// Helper function to get coordinates from zip code
+function getCoordinatesFromZip(zipCode) {
+  const coords = zipCodeCoordinates[zipCode];
+  if (coords) {
+    return {
+      lat: coords.lat.toString(),
+      lon: coords.lon.toString(),
+      name: coords.name
+    };
+  }
+  return null;
+}
+
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
-    const lat = searchParams.get('lat') || '40.7128'; // Default to NYC
-    const lon = searchParams.get('lon') || '-74.0060';
+    
+    // Check for zip code first, then fall back to lat/lon
+    const zipCode = searchParams.get('zip');
+    let lat, lon, locationName;
+    
+    if (zipCode) {
+      const coords = getCoordinatesFromZip(zipCode);
+      if (coords) {
+        lat = coords.lat;
+        lon = coords.lon;
+        locationName = coords.name;
+        console.log(`\n=== ZIP CODE LOOKUP ===`);
+        console.log(`ZIP Code: ${zipCode}`);
+        console.log(`Location: ${locationName}`);
+        console.log(`Coordinates: ${lat}, ${lon}`);
+      } else {
+        console.log(`\n=== UNKNOWN ZIP CODE ===`);
+        console.log(`ZIP Code: ${zipCode} not found in mapping`);
+        // Fall back to default NYC coordinates
+        lat = '40.7128';
+        lon = '-74.0060';
+        locationName = 'NYC (Default)';
+      }
+    } else {
+      // Use provided lat/lon or default to NYC
+      lat = searchParams.get('lat') || '40.7128';
+      lon = searchParams.get('lon') || '-74.0060';
+      locationName = 'Custom Location';
+    }
     
     // Use Brooklyn/NYC timezone explicitly
     const brooklynTimezone = 'America/New_York';
@@ -17,6 +101,7 @@ export async function GET(request) {
     console.log(`Server time: ${now.toISOString()}`);
     console.log(`Brooklyn time: ${brooklynTime.toISOString()}`);
     console.log(`Brooklyn current hour: ${currentHour}`);
+    console.log(`Location: ${locationName} (${lat}, ${lon})`);
     
     // Use explicit timezone in API request
     const url = `https://api.open-meteo.com/v1/forecast?` +
@@ -123,9 +208,9 @@ export async function GET(request) {
         if (weatherCode === 95) return 'partly_cloudy'; // Light thunderstorm risk = partly cloudy
       }
       
-      // For rain codes, only classify as rainy if meaningful chance (>30%)
+      // For rain codes, only classify as rainy if meaningful chance (>40%)
       if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(weatherCode)) {
-        if (precipProbability > 30) return 'rainy';
+        if (precipProbability > 40) return 'rainy';
         // Light rain risk = cloudy conditions
         return 'cloudy';
       }

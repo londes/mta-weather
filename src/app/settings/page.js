@@ -7,7 +7,7 @@ import { useStation } from '../../contexts/StationContext';
 
 export default function Settings() {
   const { theme, setTheme } = useTheme();
-  const { selectedLine, setSelectedLine, selectedStation, setSelectedStation, getAvailableStations } = useStation();
+  const { selectedLine, setSelectedLine, selectedStation, setSelectedStation, selectedZipCode, setSelectedZipCode, getAvailableStations } = useStation();
 
   const handleThemeChange = (e) => {
     setTheme(e.target.value);
@@ -30,6 +30,21 @@ export default function Settings() {
   const handleStationChange = (e) => {
     setSelectedStation(e.target.value);
   };
+
+  const handleZipCodeChange = (e) => {
+    setSelectedZipCode(e.target.value);
+  };
+
+  // Predefined borough zip codes
+  const boroughZipCodes = [
+    { value: '', label: 'Select a borough' },
+    { value: '10009', label: '🗽 Manhattan' },
+    { value: '11222', label: '🌉 Brooklyn' },
+    { value: '11367', label: '🏙️ Queens' },
+    { value: '10457', label: '🏟️ Bronx' },
+    { value: '10314', label: '🚢 Staten Island' },
+    { value: 'custom', label: '✏️ Custom ZIP Code' }
+  ];
 
   // Station options based on selected line
   const getStationOptions = () => {
@@ -155,9 +170,39 @@ export default function Settings() {
                     </select>
                 </div>
                 <div className={styles.formGroup}>
-                    <h4>Weather</h4>
-                    <label htmlFor='zipCode'>Zip Code</label>
-                    <input type="text" id="zipCode" name="zipCode" className={styles.inputField} />
+                    <h4>Weather Location</h4>
+                    <label htmlFor='borough'>Borough</label>
+                    <select 
+                        id="borough" 
+                        name="borough" 
+                        value={boroughZipCodes.find(b => b.value === selectedZipCode) ? selectedZipCode : 'custom'}
+                        onChange={(e) => {
+                            if (e.target.value === 'custom') {
+                                // Don't change selectedZipCode, just let user type
+                            } else {
+                                setSelectedZipCode(e.target.value);
+                            }
+                        }}
+                        className={styles.selectField}
+                    >
+                        {boroughZipCodes.map(option => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
+                    <label htmlFor='zipCode'>ZIP Code</label>
+                    <input 
+                        type="text" 
+                        id="zipCode" 
+                        name="zipCode" 
+                        value={selectedZipCode}
+                        onChange={handleZipCodeChange}
+                        className={styles.inputField}
+                        placeholder="Enter ZIP code (e.g., 11222)"
+                        maxLength="5"
+                        pattern="[0-9]{5}"
+                    />
                 </div>
             </form>
         </div>
