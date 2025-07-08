@@ -106,7 +106,7 @@ export default function Settings() {
         <div className={styles.settingsContainer}>
             <form>
                 <div className={styles.formGroup}>
-                    <h4>Theme</h4>
+                    <h3>Theme</h3>
                     <div className={styles.radioGroup}>
                         <label className={styles.radioLabel}>
                             <input 
@@ -141,7 +141,7 @@ export default function Settings() {
                     </div>
                 </div>
                 <div className={styles.formGroup}>
-                    <h4>Subway Line & Station</h4>
+                    <h3>Subway Line & Station</h3>
                     <label htmlFor='subwayLine'>Subway Line</label>
                     <select 
                         id="subwayLine" 
@@ -170,7 +170,7 @@ export default function Settings() {
                     </select>
                 </div>
                 <div className={styles.formGroup}>
-                    <h4>Weather Location</h4>
+                    <h3>Weather Location</h3>
                     <label htmlFor='borough'>Borough</label>
                     <select 
                         id="borough" 
