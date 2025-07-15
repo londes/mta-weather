@@ -21,7 +21,7 @@ export default function Settings() {
     if (newLine === 'G') {
       setSelectedStation('greenpoint-ave'); // OG Greenpoint Ave station
     } else if (newLine === 'L') {
-      setSelectedStation('8th-ave'); // Manhattan terminal
+      setSelectedStation('lorimer-st'); // Lorimer St default
     } else {
       setSelectedStation('');
     }

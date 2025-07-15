@@ -7,6 +7,7 @@ import styles from "./MTAArrivals.module.css";
 export default function MTAArrivals() {
   const [mtaData, setMtaData] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [isContextLoaded, setIsContextLoaded] = useState(false);
   const { selectedLine, getCurrentStation } = useStation();
 
   const fetchMTAData = () => {
@@ -23,7 +24,21 @@ export default function MTAArrivals() {
       });
   };
 
+  // Check if context is fully loaded
   useEffect(() => {
+    const currentStation = getCurrentStation();
+    if (selectedLine && currentStation) {
+      setIsContextLoaded(true);
+    } else {
+      setIsContextLoaded(false);
+      setMtaData(null); // Clear stale data when context changes
+    }
+  }, [selectedLine, getCurrentStation]);
+
+  useEffect(() => {
+    // Only fetch data when context is fully loaded
+    if (!isContextLoaded) return;
+
     // Fetch data immediately on component mount
     fetchMTAData();
 
@@ -32,7 +47,7 @@ export default function MTAArrivals() {
 
     // Cleanup interval on component unmount
     return () => clearInterval(interval);
-  }, [selectedLine]); // Re-fetch when line changes
+  }, [selectedLine, isContextLoaded]);
 
   // Helper function to get soonest arrivals for any station
   const getSoonestArrivals = (allTrips, stationId) => {
@@ -69,11 +84,21 @@ export default function MTAArrivals() {
       .slice(0, 2);
   };
 
+  // Show loading state while context is loading
+  if (!isContextLoaded) {
+    return (
+      <div>
+        <h1>Loading station information...</h1>
+        <p>Initializing {selectedLine} train data...</p>
+      </div>
+    );
+  }
+
   // Get current station info from context
   const currentStation = getCurrentStation();
   
   if (!currentStation) {
-    return <div>Loading station information...</div>;
+    return <div>Error: Station information not available</div>;
   }
 
   // Get direction IDs based on train line

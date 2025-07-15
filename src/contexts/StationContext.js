@@ -199,8 +199,8 @@ export function StationProvider({ children }) {
     if (savedStation && stationMapping[savedStation]) {
       setSelectedStation(savedStation);
     } else if (savedLine === 'L') {
-      // Default to 8th Avenue for L train
-      setSelectedStation('8th-ave');
+      // Default to Lorimer St for L train
+      setSelectedStation('lorimer-st');
     } else {
       // Default to Greenpoint Ave for G train or if no valid saved station
       setSelectedStation('greenpoint-ave');
@@ -230,7 +230,7 @@ export function StationProvider({ children }) {
       if (selectedLine === 'G') {
         setSelectedStation('greenpoint-ave'); // Default G train station
       } else if (selectedLine === 'L') {
-        setSelectedStation('8th-ave'); // Default L train station (Manhattan terminal)
+        setSelectedStation('lorimer-st'); // Default L train station
       }
     }
   }, [selectedLine, selectedStation]);
