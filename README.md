@@ -1,8 +1,8 @@
 # NYC Transit & Weather Display
 
-A real-time wall-mounted dashboard displaying NYC weather forecasts and MTA subway arrivals, designed for continuous display on monitors with full customization options.
+A real-time wall-mounted dashboard displaying NYC weather forecasts and MTA subway arrivals, designed for continuous display on monitors with full customization options. Designed for persistent use with a monitor, but it's also mobile friendly.
 
-![Dashboard Preview](https://via.placeholder.com/800x400/1f2937/ffffff?text=Weather+%26+Transit+Dashboard)
+![run it on your desktop  or check on mobile](https://mta-weather.wilpur.me)
 
 ## ✨ Features
 
@@ -28,7 +28,7 @@ A real-time wall-mounted dashboard displaying NYC weather forecasts and MTA subw
 - **Persistent Settings**: Theme preferences saved across sessions
 
 ### ⚙️ Settings & Customization
-- **Settings Page**: Full configuration interface accessible via gear icon
+- **Settings Page**: Full configuration interface accessible
 - **Station Selection**: Choose your preferred subway line and station
 - **Theme Control**: Manual theme selection or automatic day/night switching
 - **Weather Location**: Select from predefined borough ZIP codes or enter custom ZIP code
