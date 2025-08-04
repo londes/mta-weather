@@ -121,7 +121,7 @@ export async function GET(request) {
 
     // Return comprehensive info about the feed
     return Response.json({
-      line: line,
+      line,
       header: feed.header,
       timestamp: new Date(feed.header.timestamp * 1000).toISOString(),
       summary: {
@@ -133,6 +133,11 @@ export async function GET(request) {
         tripsWithoutStops: tripsWithoutStops.length,
         lineSpecificTrips: lineTrips.length
       },
+      // Include actual alerts data for service disruptions
+      alerts: alerts.map(entity => ({
+        id: entity.id,
+        alert: entity.alert
+      })),
       stopAnalysis: {
         totalUniqueStops: allStops.size,
         [`${directionLabels.direction1}Stops`]: sortedDirection1,
