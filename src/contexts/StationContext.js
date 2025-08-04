@@ -14,7 +14,7 @@ export function useStation() {
 
 // Station mapping from dropdown values to MTA station IDs and display names
 const stationMapping = {
-  // G Train stations (North to South: Court Square to Metropolitan Ave/Lorimer St)
+  // G Train stations - Original correct mappings (G22-G36 series)
   'court-square': {
     displayName: 'Court Square',
     northboundId: 'G22N',
@@ -35,25 +35,45 @@ const stationMapping = {
     northboundId: 'G28N',
     southboundId: 'G28S'
   },
-  'manhattan-ave': {
-    displayName: 'Manhattan Ave',
+  'metropolitan-ave': {
+    displayName: 'Metropolitan Ave',
     northboundId: 'G29N',
     southboundId: 'G29S'
   },
-  'graham-ave': {
-    displayName: 'Graham Ave',
+  'broadway': {
+    displayName: 'Broadway',
     northboundId: 'G30N',
     southboundId: 'G30S'
   },
-  'grand-st-g': {
-    displayName: 'Grand St',
+  'flushing-ave': {
+    displayName: 'Flushing Ave',
     northboundId: 'G31N',
     southboundId: 'G31S'
   },
-  'metropolitan-lorimer': {
-    displayName: 'Metropolitan Ave/Lorimer St',
+  'myrtle-willoughby': {
+    displayName: 'Myrtle-Willoughby Aves',
     northboundId: 'G32N',
     southboundId: 'G32S'
+  },
+  'bedford-nostrand': {
+    displayName: 'Bedford-Nostrand Aves',
+    northboundId: 'G33N',
+    southboundId: 'G33S'
+  },
+  'classon-ave': {
+    displayName: 'Classon Ave',
+    northboundId: 'G34N',
+    southboundId: 'G34S'
+  },
+  'clinton-washington': {
+    displayName: 'Clinton-Washington Aves',
+    northboundId: 'G35N',
+    southboundId: 'G35S'
+  },
+  'fulton-st': {
+    displayName: 'Fulton St',
+    northboundId: 'G36N',
+    southboundId: 'G36S'
   },
 
   // L Train stations - Manhattan (5 stations)

@@ -51,14 +51,19 @@ export default function Settings() {
     if (selectedLine === 'G') {
       return [
         { value: '', label: 'Select a station' },
+        // G Train line in actual geographic order (north to south)
         { value: 'court-square', label: 'Court Square' },
         { value: '21st-st', label: '21st St-Queensbridge' },
         { value: 'greenpoint-ave', label: 'Greenpoint Ave' },
         { value: 'nassau-ave', label: 'Nassau Ave' },
-        { value: 'manhattan-ave', label: 'Manhattan Ave' },
-        { value: 'graham-ave', label: 'Graham Ave' },
-        { value: 'grand-st-g', label: 'Grand St' },
-        { value: 'metropolitan-lorimer', label: 'Metropolitan Ave/Lorimer St' }
+        { value: 'metropolitan-ave', label: 'Metropolitan Ave' },
+        { value: 'broadway', label: 'Broadway' },
+        { value: 'flushing-ave', label: 'Flushing Ave' },
+        { value: 'myrtle-willoughby', label: 'Myrtle-Willoughby Aves' },
+        { value: 'bedford-nostrand', label: 'Bedford-Nostrand Aves' },
+        { value: 'classon-ave', label: 'Classon Ave' },
+        { value: 'clinton-washington', label: 'Clinton-Washington Aves' },
+        { value: 'fulton-st', label: 'Fulton St' }
       ];
     } else if (selectedLine === 'L') {
       return [
