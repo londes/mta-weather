@@ -54,13 +54,16 @@ export async function GET(request) {
         };
       });
 
-    // Filter by line if specified
+    // Filter by line if specified - be very strict about relevance
     const filteredAlerts = line 
-      ? alerts.filter(alert => 
-          alert.affectedRoutes.includes(line) || 
-          alert.headerText.includes(line) || 
-          alert.descriptionText.includes(line)
-        )
+      ? alerts.filter(alert => {
+          // Must be in affected routes OR explicitly mentioned with brackets
+          const inAffectedRoutes = alert.affectedRoutes.includes(line);
+          const explicitMention = alert.headerText.includes(`[${line}]`) || 
+                                 alert.descriptionText.includes(`[${line}]`);
+          
+          return inAffectedRoutes || explicitMention;
+        })
       : alerts;
 
     console.log(`Found ${alerts.length} total alerts, ${filteredAlerts.length} relevant alerts`);

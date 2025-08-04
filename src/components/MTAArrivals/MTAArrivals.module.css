@@ -1,3 +1,124 @@
+/* Alert Indicator Styles */
+.alertIndicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  transition: all 0.2s ease;
+}
+
+.alertIndicator:hover {
+  background: rgba(239, 68, 68, 0.2);
+  transform: scale(1.05);
+}
+
+.alertBadge {
+  background: #ef4444;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.alertModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.alertModalContent {
+  background: var(--background);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.alertModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.alertModalClose {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.alertModalClose:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--text-primary);
+}
+
+.serviceAlert {
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 12px 0;
+  border-left: 4px solid #ef4444;
+}
+
+.alertHeader {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.alertDescription {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.alertPeriod {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* Component background changes when alerts are present */
+.hasAlerts {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(220, 38, 38, 0.05));
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
 .trainsContainer {
   display: flex;
   flex-direction: row;
@@ -99,6 +220,34 @@
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
+  .alertsContainer {
+    margin: 3vh 0 4vh 0;
+    padding: 4vw;
+    border-radius: 12px;
+  }
+
+  .alertsTitle {
+    font-size: clamp(1.1rem, 4vw, 1.25rem);
+  }
+
+  .serviceAlert {
+    padding: 3vw;
+    margin: 2vh 0;
+  }
+
+  .alertHeader {
+    font-size: clamp(0.9rem, 3.5vw, 1rem);
+  }
+
+  .alertDescription {
+    font-size: clamp(0.8rem, 3vw, 0.9rem);
+    padding: 3vw;
+  }
+
+  .alertPeriod {
+    font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+  }
+
   .trainsContainer {
     flex-direction: column;
     gap: 3vh;
@@ -139,5 +288,58 @@
   .trainArrival > div:last-child > div:last-child {
     font-size: 3vw;
     max-font-size: 0.875rem;
+  }
+
+  .hasAlerts {
+    margin: 2vh 0;
+    padding: 4vw;
+  }
+
+  .alertIndicator {
+    padding: 2vw 3vw;
+    gap: 2vw;
+  }
+
+  .alertBadge {
+    width: 5vw;
+    height: 5vw;
+    max-width: 24px;
+    max-height: 24px;
+    font-size: clamp(10px, 3vw, 14px);
+  }
+
+  .alertModal {
+    padding: 4vw;
+  }
+
+  .alertModalContent {
+    padding: 5vw;
+    max-width: 90vw;
+    max-height: 85vh;
+  }
+
+  .alertModalClose {
+    width: 8vw;
+    height: 8vw;
+    max-width: 40px;
+    max-height: 40px;
+    font-size: clamp(20px, 6vw, 28px);
+  }
+
+  .serviceAlert {
+    padding: 4vw;
+    margin: 3vh 0;
+  }
+
+  .alertHeader {
+    font-size: clamp(0.9rem, 4vw, 1rem);
+  }
+
+  .alertDescription {
+    font-size: clamp(0.8rem, 3.5vw, 0.9rem);
+  }
+
+  .alertPeriod {
+    font-size: clamp(0.7rem, 3vw, 0.8rem);
   }
 }

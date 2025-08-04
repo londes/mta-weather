@@ -6,8 +6,10 @@ import styles from "./MTAArrivals.module.css";
 
 export default function MTAArrivals() {
   const [mtaData, setMtaData] = useState(null);
+  const [alertsData, setAlertsData] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
   const [isContextLoaded, setIsContextLoaded] = useState(false);
+  const [showAlertModal, setShowAlertModal] = useState(false);
   const { selectedLine, getCurrentStation } = useStation();
 
   const fetchMTAData = () => {
@@ -24,6 +26,19 @@ export default function MTAArrivals() {
       });
   };
 
+  const fetchAlertsData = () => {
+    console.log(`Fetching ${selectedLine} line service alerts`);
+    fetch(`/api/alerts?line=${selectedLine}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(`${selectedLine} alerts received:`, data);
+        setAlertsData(data);
+      })
+      .catch((error) => {
+        console.error(`Error fetching ${selectedLine} alerts:`, error);
+      });
+  };
+
   // Check if context is fully loaded
   useEffect(() => {
     const currentStation = getCurrentStation();
@@ -32,6 +47,7 @@ export default function MTAArrivals() {
     } else {
       setIsContextLoaded(false);
       setMtaData(null); // Clear stale data when context changes
+      setAlertsData(null); // Clear stale alerts when context changes
     }
   }, [selectedLine, getCurrentStation]);
 
@@ -41,9 +57,13 @@ export default function MTAArrivals() {
 
     // Fetch data immediately on component mount
     fetchMTAData();
+    fetchAlertsData();
 
     // Set up interval to fetch data every 29 seconds
-    const interval = setInterval(fetchMTAData, 29000);
+    const interval = setInterval(() => {
+      fetchMTAData();
+      fetchAlertsData();
+    }, 29000);
 
     // Cleanup interval on component unmount
     return () => clearInterval(interval);
@@ -54,34 +74,46 @@ export default function MTAArrivals() {
     if (!allTrips || !stationId) return [];
     
     const arrivals = [];
-    
+
     allTrips.forEach(trip => {
-      if (trip.routeId !== selectedLine) return;
-      
-      trip.stopUpdates?.forEach(stop => {
+      trip.stopUpdates.forEach(stop => {
         if (stop.stopId === stationId && stop.arrivalTime) {
           const arrivalTime = new Date(stop.arrivalTime);
           const now = new Date();
-          const minutesAway = Math.round((arrivalTime - now) / 60000);
+          const minutesAway = Math.round((arrivalTime - now) / (1000 * 60));
           
-          // Only include future arrivals
-          if (minutesAway >= 0) {
+          // Only include future arrivals (or arriving very soon)
+          if (minutesAway >= -1) {
             arrivals.push({
               tripId: trip.tripId,
-              trainId: trip.trainId,
-              stopId: stop.stopId,
               arrivalTime: stop.arrivalTime,
-              minutesAway: minutesAway
+              minutesAway: minutesAway,
+              trainId: trip.trainId
             });
           }
         }
       });
     });
-    
-    // Sort by arrival time and return the 2 soonest
+
+    // Sort by arrival time and return the first 2
     return arrivals
       .sort((a, b) => new Date(a.arrivalTime) - new Date(b.arrivalTime))
       .slice(0, 2);
+  };
+
+  // Get relevant alerts for the current line
+  const getRelevantAlerts = () => {
+    if (!alertsData || alertsData.filteredAlerts === 0) {
+      return [];
+    }
+
+    return alertsData.alerts.filter(alert => {
+      const mentionsLineInRoutes = alert.affectedRoutes.includes(selectedLine);
+      const explicitlyMentionsLine = alert.headerText.includes(`[${selectedLine}]`) || 
+                                     alert.descriptionText.includes(`[${selectedLine}]`);
+      
+      return mentionsLineInRoutes || explicitlyMentionsLine;
+    });
   };
 
   // Show loading state while context is loading
@@ -140,9 +172,24 @@ export default function MTAArrivals() {
     return "/NYCS-bull-trans-G-Std.svg"; // fallback
   };
 
+  const relevantAlerts = getRelevantAlerts();
+
   return (
     <div>
-      <h1>{selectedLine} Train - {currentStation.displayName}</h1>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+        <h1>{selectedLine} Train - {currentStation.displayName}</h1>
+        {relevantAlerts.length > 0 && (
+          <div 
+            className={styles.alertIndicator}
+            onClick={() => setShowAlertModal(true)}
+            title="Service alerts - tap for details"
+          >
+            <span>⚠️</span>
+            <div className={styles.alertBadge}>{relevantAlerts.length}</div>
+          </div>
+        )}
+      </div>
+      
       <p>
         Last Updated: {lastUpdated ? lastUpdated.toLocaleTimeString() : 'Loading...'} 
       </p>
@@ -169,7 +216,7 @@ export default function MTAArrivals() {
               )}
             </div>
             <div className={styles.arrivalContainer}>
-            {direction2Arrivals.length ? ( 
+            {direction2Arrivals.length > 0 ? ( 
               direction2Arrivals.map((arrival, i) => (
               <div key={i} className={styles.trainArrival}>
                 <div>
@@ -190,6 +237,43 @@ export default function MTAArrivals() {
         </div>
       ) : (
         <div>Loading...</div>
+      )}
+
+      {/* Alert Modal */}
+      {showAlertModal && (
+        <div className={styles.alertModal} onClick={() => setShowAlertModal(false)}>
+          <div className={styles.alertModalContent} onClick={e => e.stopPropagation()}>
+            <div className={styles.alertModalHeader}>
+              <h2>⚠️ {selectedLine} Line Service Alerts</h2>
+              <button 
+                className={styles.alertModalClose}
+                onClick={() => setShowAlertModal(false)}
+              >
+                ×
+              </button>
+            </div>
+            {relevantAlerts.map((alert, index) => (
+              <div key={alert.id || index} className={styles.serviceAlert}>
+                <div className={styles.alertHeader}>
+                  <strong>{alert.headerText}</strong>
+                </div>
+                {alert.descriptionText && (
+                  <div className={styles.alertDescription}>
+                    {alert.descriptionText}
+                  </div>
+                )}
+                {alert.activePeriods && alert.activePeriods.length > 0 && (
+                  <div className={styles.alertPeriod}>
+                    Active: {new Date(alert.activePeriods[0].start).toLocaleDateString()} - 
+                    {alert.activePeriods[0].end && alert.activePeriods[0].end !== "1970-01-01T00:00:00.000Z" 
+                      ? new Date(alert.activePeriods[0].end).toLocaleDateString()
+                      : "Until further notice"}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );
